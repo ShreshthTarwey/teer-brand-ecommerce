@@ -1,0 +1,418 @@
+/* ========================================
+   TEER BRAND - CHECKOUT PAGE STYLES
+   File: client/src/pages/Checkout.css
+   ======================================== */
+
+/* Page Container */
+.checkout-page {
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding: 40px 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Page Header */
+.checkout-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.checkout-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: 'Merriweather', serif;
+  font-size: 2.5rem;
+  color: #e21f26;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.checkout-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}
+
+/* Error Alert */
+.error-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 25px;
+  color: #c00;
+  font-size: 0.95rem;
+}
+
+.error-alert svg {
+  flex-shrink: 0;
+}
+
+/* Two Column Grid */
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* Section Card */
+.section-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.section-header svg {
+  color: #e21f26;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* ========================================
+   FORM STYLES (Left Column)
+   ======================================== */
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.form-input,
+.form-textarea {
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #e21f26;
+  box-shadow: 0 0 0 3px rgba(226, 31, 38, 0.1);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #aaa;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Form Row (for City and Pincode) */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Submit Button */
+.submit-button {
+  width: 100%;
+  padding: 16px 32px;
+  background-color: #e21f26;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #c11a20;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(226, 31, 38, 0.3);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ========================================
+   ORDER SUMMARY STYLES (Right Column)
+   ======================================== */
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 25px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Custom Scrollbar */
+.order-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.order-items::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.order-items::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.order-items::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* Order Item */
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.order-item:hover {
+  background-color: #f5f5f5;
+}
+
+.item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  flex-shrink: 0;
+}
+
+.item-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-quantity {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+}
+
+.item-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e21f26;
+  font-family: 'Merriweather', serif;
+  flex-shrink: 0;
+}
+
+/* Price Breakdown */
+.price-breakdown {
+  padding-top: 20px;
+  border-top: 2px solid #f0f0f0;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.price-label {
+  font-size: 1rem;
+  color: #666;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.price-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Merriweather', serif;
+}
+
+.price-divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 10px 0;
+}
+
+.total-row {
+  padding-top: 15px;
+}
+
+.total-row .price-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.total-value {
+  font-size: 1.5rem;
+  color: #e21f26;
+  font-weight: 700;
+}
+
+/* Payment Info */
+.payment-info {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border-left: 4px solid #e21f26;
+}
+
+.payment-method {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.payment-method strong {
+  color: #e21f26;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+  .checkout-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .checkout-title {
+    font-size: 3rem;
+  }
+}
+
+/* Desktop (1024px and up) */
+@media (min-width: 1024px) {
+  .checkout-page {
+    padding: 60px 40px;
+  }
+
+  .checkout-grid {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 40px;
+  }
+
+  .section-card {
+    padding: 35px;
+  }
+}
+
+/* Small Mobile Adjustments */
+@media (max-width: 480px) {
+  .checkout-title {
+    font-size: 2rem;
+  }
+
+  .checkout-title svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .section-card {
+    padding: 20px;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .submit-button {
+    font-size: 1rem;
+    padding: 14px 24px;
+  }
+
+  .item-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .item-name {
+    font-size: 0.85rem;
+  }
+
+  .item-price {
+    font-size: 1rem;
+  }
+}

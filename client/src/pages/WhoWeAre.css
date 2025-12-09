@@ -1,0 +1,255 @@
+/* Hero Banner */
+.hero-banner {
+    position: relative;
+    height: 500px;
+    background-image: url('/images/Who_we_are_img1.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-banner h1 {
+    color: white;
+    font-size: 4rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Company Profile Section */
+.company-profile {
+    display: flex;
+    padding: 50px 10%;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+.company-profile-image {
+    max-width: 400px;
+}
+
+.company-profile-text {
+    flex: 1;
+    /* Ensure this container stacks children vertically */
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; /* Left align text and SVG */
+}
+
+.company-profile-text h2 {
+    color: #333;
+    margin-bottom: 0px; /* Remove gap so SVG sits close */
+    width: 100%;
+}
+
+/* FIXED: Left-aligned SVG */
+.company-profile-text svg {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    width: 40%; /* Explicit width control */
+}
+
+.company-profile-text p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Spices and Food Section */
+.spices-food-section .section-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 50px;
+    padding: 50px 10%;
+}
+
+.spices-food-section .section-text {
+    flex: 1;
+}
+
+.spices-food-section .section-image {
+    flex: 1;
+}
+
+.spices-food-section .section-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- CRITICAL FIX FOR HEADERS --- */
+/* This forces the H2 and SVG to stack vertically, fixing the side-by-side issue */
+.section-header {
+    width: 100%;
+    margin-bottom: 30px;
+    display: flex;          /* Use Flexbox */
+    flex-direction: column; /* Stack Top-to-Bottom */
+    align-items: center;    /* Center them horizontally */
+    justify-content: center;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 5px; /* Small gap before line */
+    text-align: center;
+}
+
+.section-header .red-text {
+    color: #ec3136;
+}
+
+/* FIXED: Center-aligned SVG */
+.section-header svg {
+    display: block;
+    margin: 0 auto; /* Ensure centering */
+    max-width: 50%; /* Prevent it from being too huge */
+}
+
+/* Manufacturing Facility Section */
+.manufacturing-facility {
+    padding: 50px 0;
+    background-color: white;
+    position: relative;
+}
+
+.manufacturing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.manufacturing-grid .grid-item {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.manufacturing-grid .grid-item:hover {
+    transform: scale(1.05);
+}
+
+.manufacturing-grid .grid-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.manufacturing-grid .grid-item-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(236, 49, 54, 0.8);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Company Infrastructure Section */
+.company-infrastructure {
+    padding: 70px 0;
+    background-color: white;
+}
+
+.infrastructure-content {
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    gap: 50px;
+}
+
+.infrastructure-text {
+    flex: 1;
+    /* Force vertical stacking for Infrastructure text too */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.infrastructure-text h3 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.infrastructure-text svg {
+    display: block;
+    margin-bottom: 20px;
+    width: 40%;
+}
+
+.infrastructure-text p {
+    color: #666;
+    line-height: 1.6;
+    margin-top: 0;
+}
+
+.infrastructure-image {
+    flex: 1;
+}
+
+.infrastructure-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .company-profile {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    /* On mobile, center the Company Profile text items */
+    .company-profile-text {
+        align-items: center; 
+    }
+    
+    .spices-food-section .section-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .manufacturing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        width: 90%;
+    }
+
+    .infrastructure-content {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    /* On mobile, center the Infrastructure text items */
+    .infrastructure-text {
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .manufacturing-grid {
+        grid-template-columns: 1fr;
+        width: 95%;
+    }
+}
