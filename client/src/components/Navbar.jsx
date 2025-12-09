@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Store, User, Menu, X, LogOut, ShoppingCart, Package, ChevronDown } from 'lucide-react';
+import { useCart} from '../context/CartContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-
+  const { clearCart } = useCart();
   const user = JSON.parse(localStorage.getItem("user"));
 
   const toggleMenu = () => {
@@ -14,6 +15,7 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    clearCart();
     localStorage.removeItem("user");
     window.location.reload();
   }

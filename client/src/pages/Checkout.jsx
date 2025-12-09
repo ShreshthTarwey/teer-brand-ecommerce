@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Truck, CreditCard, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext'; // <--- USE REAL CONTEXT
-import './Checkout.css'; // <--- FIXED IMPORT
+import './Checkout.css'; 
+import emailjs from '@emailjs/browser';
 
 const Checkout = () => {
   // 1. Get Real Data from Context
@@ -50,11 +51,157 @@ const Checkout = () => {
     return true;
   };
   
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!validateForm()) return;
+    
+  //   // 3. AUTH CHECK
+  //   const userDataString = localStorage.getItem('user');
+  //   if (!userDataString) {
+  //     alert('Please login to continue');
+  //     navigate('/login');
+  //     return;
+  //   }
+    
+  //   const userData = JSON.parse(userDataString);
+  //   const token = userData.accessToken;
+  //   const userId = userData._id;
+    
+  //   // 4. PREPARE ORDER PAYLOAD
+  //   const orderData = {
+  //     userId: userId,
+  //     products: cartItems.map(item => ({
+  //       productId: item.id, // Ensure this matches your Cart item structure (id vs _id)
+  //       quantity: item.quantity
+  //     })),
+  //     amount: total,
+  //     address: {
+  //       fullName: formData.fullName,
+  //       phone: formData.phone,
+  //       address: formData.address,
+  //       city: formData.city,
+  //       pincode: formData.pincode
+  //     }
+  //   };
+    
+  //   setLoading(true);
+    
+  //   try {
+  //     // 5. SEND TO BACKEND
+  //     const response = await fetch('http://localhost:5000/api/orders', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'token': `Bearer ${token}`
+  //       },
+  //       body: JSON.stringify(orderData)
+  //     });
+      
+  //     if (!response.ok) throw new Error('Failed to place order');
+      
+  //     // 6. SUCCESS
+  //     alert('Order Placed Successfully! 🎉');
+  //     clearCart(); // Wipe the cart
+  //     navigate('/'); // Go Home
+      
+  //   } catch (err) {
+  //     setError('Failed to place order. Please try again.');
+  //     console.error('Order Error:', err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  //   const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!validateForm()) return;
+    
+  //   const userDataString = localStorage.getItem('user');
+  //   if (!userDataString) {
+  //     alert('Please login to continue');
+  //     navigate('/login');
+  //     return;
+  //   }
+    
+  //   const userData = JSON.parse(userDataString);
+  //   const token = userData.accessToken;
+  //   const userId = userData._id;
+    
+  //   const orderData = {
+  //     userId: userId,
+  //     products: cartItems.map(item => ({
+  //       productId: item.id,
+  //       quantity: item.quantity
+  //     })),
+  //     amount: total,
+  //     address: {
+  //       fullName: formData.fullName,
+  //       phone: formData.phone,
+  //       address: formData.address,
+  //       city: formData.city,
+  //       pincode: formData.pincode
+  //     }
+  //   };
+    
+  //   setLoading(true);
+    
+  //   try {
+  //     // 1. SAVE TO MONGODB (Backend)
+  //     const response = await fetch('http://localhost:5000/api/orders', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'token': `Bearer ${token}`
+  //       },
+  //       body: JSON.stringify(orderData)
+  //     });
+      
+  //     if (!response.ok) throw new Error('Failed to place order');
+      
+  //     // 2. SEND EMAIL (Frontend - Bypasses Render Block)
+  //     // Prepare the data to match your EmailJS Template variables
+  //     const emailParams = {
+  //       to_name: formData.fullName,
+  //       total_amount: `₹${total}`,
+  //       address: `${formData.address}, ${formData.city} - ${formData.pincode}`,
+  //       user_email: userData.email // Assuming user object has email
+  //     };
+
+  //     await emailjs.send(
+  //       "service_w11ztee",      // <--- PASTE YOUR SERVICE ID
+  //       "template_w54oyky",     // <--- PASTE YOUR TEMPLATE ID
+  //       emailParams,
+  //       "d7gZ3l4sWs6vNFFTB"       // <--- PASTE YOUR PUBLIC KEY
+  //     );
+      
+  //     console.log("Email sent successfully!");
+
+  //     // 3. SUCCESS UI
+  //     alert('Order Placed! A confirmation email has been sent.');
+  //     clearCart();
+  //     navigate('/'); 
+      
+  //   } catch (err) {
+  //     console.error('Order/Email Error:', err);
+  //     // We still alert success if the Order saved but Email failed, to avoid panic
+  //     if(err.text) { 
+  //         alert("Order placed, but email confirmation failed."); 
+  //         clearCart();
+  //         navigate('/');
+  //     } else {
+  //         setError('Failed to place order. Please try again.');
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // ... inside Checkout.jsx
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     
-    // 3. AUTH CHECK
     const userDataString = localStorage.getItem('user');
     if (!userDataString) {
       alert('Please login to continue');
@@ -66,11 +213,11 @@ const Checkout = () => {
     const token = userData.accessToken;
     const userId = userData._id;
     
-    // 4. PREPARE ORDER PAYLOAD
+    // 1. Prepare MongoDB Order Data
     const orderData = {
       userId: userId,
       products: cartItems.map(item => ({
-        productId: item.id, // Ensure this matches your Cart item structure (id vs _id)
+        productId: item.id,
         quantity: item.quantity
       })),
       amount: total,
@@ -86,7 +233,7 @@ const Checkout = () => {
     setLoading(true);
     
     try {
-      // 5. SEND TO BACKEND
+      // 2. SAVE TO MONGODB
       const response = await fetch('http://localhost:5000/api/orders', {
         method: 'POST',
         headers: {
@@ -98,14 +245,48 @@ const Checkout = () => {
       
       if (!response.ok) throw new Error('Failed to place order');
       
-      // 6. SUCCESS
-      alert('Order Placed Successfully! 🎉');
-      clearCart(); // Wipe the cart
-      navigate('/'); // Go Home
+      // 3. SEND EMAIL (Fixed Logic)
+      
+      // A. Create the Product List HTML String
+      const productListHTML = cartItems.map(item => 
+        `<div style="border-bottom: 1px solid #eee; padding: 5px 0;">
+           <strong>${item.name}</strong> <br/>
+           Qty: ${item.quantity} x ₹${item.price}
+         </div>`
+      ).join(''); 
+
+      // B. Prepare Params (MATCHING YOUR TEMPLATE EXACTLY)
+      const emailParams = {
+        to_name: formData.fullName,      // Matches {{to_name}}
+        user_email: userData.email,      // Matches Dashboard "To Email" field
+        order_amount: `₹${total}`,       // Matches {{order_amount}}
+        shipping_address: `${formData.address}, ${formData.city} - ${formData.pincode}`, // Matches {{shipping_address}}
+        order_list: productListHTML      // Matches {{{order_list}}}
+      };
+
+      await emailjs.send(
+        "service_w11ztee",     // <-- RE-PASTE YOUR SERVICE ID
+        "template_w54oyky",    // <-- RE-PASTE YOUR TEMPLATE ID
+        emailParams,
+        "d7gZ3l4sWs6vNFFTB"      // <-- RE-PASTE YOUR PUBLIC KEY
+      );
+
+      console.log("Email sent successfully!");
+
+      // 4. SUCCESS
+      alert('Order Placed! A confirmation email has been sent.');
+      clearCart();
+      navigate('/');
       
     } catch (err) {
-      setError('Failed to place order. Please try again.');
-      console.error('Order Error:', err);
+      console.error('Order/Email Error:', err);
+      if(err.text) { 
+          alert("Order placed, but email confirmation failed."); 
+          clearCart();
+          navigate('/');
+      } else {
+          setError('Failed to place order. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
