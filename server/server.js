@@ -61,7 +61,10 @@ app.use('/api/auth', authRoute);
 app.use('/api/products', productRoute);
 
 const orderRoute = require("./routes/order");
+const cartRoute = require("./routes/cart");
+
 app.use("/api/orders", orderRoute);
+app.use("/api/cart", cartRoute);
 
 // Start Server
 const PORT = process.env.PORT || 5000;

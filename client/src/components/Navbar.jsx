@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Store, User, Menu, X, LogOut, ShoppingCart, Package, ChevronDown } from 'lucide-react';
-import { useCart} from '../context/CartContext';
+import { useCart } from '../context/CartContext';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    clearCart();
+    // clearCart(); // REMOVED: Don't clear server cart on logout
     localStorage.removeItem("user");
     window.location.reload();
   }
@@ -29,8 +29,8 @@ const Navbar = () => {
         <span className="since-text">SINCE 1992</span>
       </div>
 
-      <button 
-        className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`} 
+      <button
+        className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
         onClick={toggleMenu}
         aria-label="Toggle Menu"
       >
@@ -39,12 +39,12 @@ const Navbar = () => {
 
       <nav className={`main-nav ${isMobileMenuOpen ? 'active' : ''}`}>
         <button className="close-menu-btn mobile-only-close" onClick={toggleMenu}>
-            <X size={24} />
+          <X size={24} />
         </button>
         <ul className="nav-links">
           <li><Link to="/">HOME</Link></li>
           <li><Link to="/who-we-are">WHO WE ARE</Link></li>
-          
+
           <li className="dropdown">
             <Link to="/products">PRODUCTS ▼</Link>
             <ul className="dropdown-content">
@@ -63,9 +63,9 @@ const Navbar = () => {
 
         {/* --- FIXED ACTIONS SECTION --- */}
         <div className="nav-actions">
-          
+
           {/* 1. ONLINE SHOP BUTTON */}
-          <Link to="/store" className="goldiee-queen" style={{display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap'}}>
+          <Link to="/store" className="goldiee-queen" style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
             <Store size={16} />
             <span>ONLINE SHOP</span> {/* Changed text to span */}
           </Link>
@@ -96,12 +96,12 @@ const Navbar = () => {
             </div>
           ) : (
             /* Login Link */
-            <Link to="/login" className="user-icon-link" style={{display: 'flex', alignItems: 'center', gap: '5px', whiteSpace: 'nowrap'}}>
-              <User size={24} color="#e21f26" /> 
+            <Link to="/login" className="user-icon-link" style={{ display: 'flex', alignItems: 'center', gap: '5px', whiteSpace: 'nowrap' }}>
+              <User size={24} color="#e21f26" />
               <span>Login/Profile</span> {/* Changed p to span */}
             </Link>
           )}
-          
+
         </div>
       </nav>
     </header>
