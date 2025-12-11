@@ -85,6 +85,7 @@ const Orders = () => {
                                         <option value="Pending">Pending</option>
                                         <option value="Shipped">Shipped</option>
                                         <option value="Delivered">Delivered</option>
+                                        <option value="cancelled">Cancelled</option>
                                     </select>
                                 </td>
                             </tr>

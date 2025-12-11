@@ -7,7 +7,7 @@ import "./OnlineStore.css";
 
 const OnlineStore = () => {
   const { addToCart, getCartCount } = useCart();
-  
+
   // 1. STATE MANAGEMENT
   const [products, setProducts] = useState([]); // Stores data from DB
   const [loading, setLoading] = useState(true); // Handles loading state
@@ -48,13 +48,13 @@ const OnlineStore = () => {
 
   return (
     <div className="online-store-page">
-      
+
       {/* HERO BANNER */}
       <section className="store-hero">
         <div className="store-hero-overlay">
           <h1 className="store-hero-title">Online Store</h1>
           <p className="store-hero-subtitle">Premium Spices & Salts Delivered Home</p>
-          
+
           <div className="store-search-bar">
             <Search className="search-icon" size={20} />
             <input
@@ -69,7 +69,7 @@ const OnlineStore = () => {
       </section>
 
       <div className="store-container">
-        
+
         {/* CATEGORY BELT */}
         <div className="category-belt">
           <div className="filter-pills">
@@ -99,30 +99,51 @@ const OnlineStore = () => {
         {/* 4. CONDITIONAL RENDERING */}
         {loading ? (
           // LOADING STATE
-          <div className="loading-container" style={{display:'flex', justifyContent:'center', padding:'50px'}}>
-             <Loader2 className="animate-spin" size={48} color="#e21f26" />
+          <div className="loading-container" style={{ display: 'flex', justifyContent: 'center', padding: '50px' }}>
+            <Loader2 className="animate-spin" size={48} color="#e21f26" />
           </div>
         ) : filteredProducts.length > 0 ? (
           // DATA GRID
           <div className="product-grid">
             {filteredProducts.map(product => (
               <div key={product._id} className="product-card"> {/* MongoDB uses _id, not id */}
-                <div className="product-image-container">
-                  <img src={product.img} alt={product.name} className="product-image" />
-                </div>
+                <Link to={`/product/${product._id}`} className="product-link">
+                  <div className="product-image-container">
+                    <img src={product.img} alt={product.name} className="product-image" />
+                  </div>
+                </Link>
                 <div className="product-info">
                   <span className="product-tag">{product.category}</span>
-                  <h3 className="product-card-name">{product.name}</h3>
+                  <Link to={`/product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <h3 className="product-card-name">{product.name}</h3>
+                  </Link>
+
+                  {/* Stock Indicator */}
+                  <div className={`stock-indicator ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}`}>
+                    {product.stock > 0 ? (
+                      product.stock < 10
+                        ? `Hurry! Only ${product.stock} left`
+                        : `In Stock: ${product.stock}`
+                    ) : (
+                      "Out of Stock"
+                    )}
+                  </div>
+
                   <div className="product-price-row">
                     <span className="product-price">₹{product.price}</span>
-                    <button className="add-btn" onClick={() => addToCart({
+                    <button
+                      className="add-btn"
+                      disabled={product.stock === 0}
+                      style={product.stock === 0 ? { opacity: 0.5, cursor: 'not-allowed', background: '#ccc' } : {}}
+                      onClick={() => addToCart({
                         id: product._id, // Map MongoDB _id to Cart id
                         name: product.name,
                         price: product.price,
                         img: product.img,
                         category: product.category
-                    })}>
-                      <ShoppingCart size={16} /> ADD
+                      })}
+                    >
+                      <ShoppingCart size={16} /> {product.stock === 0 ? 'SOLD OUT' : 'ADD'}
                     </button>
                   </div>
                 </div>

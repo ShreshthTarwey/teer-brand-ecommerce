@@ -48,6 +48,10 @@ const NewProduct = () => {
                         <input name="price" type="number" placeholder="500" onChange={handleChange} required />
                     </div>
                     <div className="form-group">
+                        <label>Stock Quantity</label>
+                        <input name="stock" type="number" placeholder="50" onChange={handleChange} required />
+                    </div>
+                    <div className="form-group">
                         <label>Category</label>
                         <select name="category" onChange={handleChange} required>
                             <option value="">Select Category</option>
