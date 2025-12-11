@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
                 } else {
                     cart.products.push({
                         productId: localItem.id,
-                        title: localItem.title,
+                        name: localItem.name,
                         img: localItem.img,
                         price: localItem.price,
                         quantity: localItem.quantity,
@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
                 // Product does not exist, push new item
                 cart.products.push({
                     productId: product.id,
-                    title: product.title,
+                    name: product.name,
                     img: product.img,
                     price: product.price,
                     quantity: 1,

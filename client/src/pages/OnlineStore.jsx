@@ -88,7 +88,7 @@ const OnlineStore = () => {
             <ShoppingCart size={18} />
             <span>Go to Cart ({getCartCount()})</span>
           </Link>
-          <Link to="/orders" className="dropdown-item">My Orders</Link>
+          {/* <Link to="/orders" className="dropdown-item">My Orders</Link> */}
         </div>
 
         {/* RESULTS COUNT */}

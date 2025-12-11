@@ -17,6 +17,8 @@ const OrderSchema = new mongoose.Schema(
     amount: { type: Number, required: true },
     address: { type: Object, required: true }, // Stores street, city, pin, etc.
     status: { type: String, default: "pending" }, // pending, approved, delivered
+    paymentStatus: { type: String, default: "Pending" },
+    paymentId: { type: String },
   },
   { timestamps: true }
 );
