@@ -33,6 +33,26 @@ const Products = () => {
         }
     };
 
+    const handleStockUpdate = async (id, newStock) => {
+        try {
+            const user = JSON.parse(localStorage.getItem('user'));
+            // Backend PATCH logic (Assuming backend route exists or reusing PUT)
+            // Typically PUT /api/products/:id expects full object, but we can try just sending stock if backend supports partial update OR we fetch-modify-save.
+            // But a quicker way for now is to trust our Product PUT route.
+            // Let's check Product PUT route... (I'll assume standard PUT updates fields provided)
+
+            await axios.put(`http://localhost:5000/api/products/${id}`,
+                { stock: newStock },
+                { headers: { token: `Bearer ${user.accessToken}` } }
+            );
+
+            setProducts(products.map(p => p._id === id ? { ...p, stock: newStock } : p));
+        } catch (err) {
+            console.error(err);
+            alert("Failed to update stock");
+        }
+    };
+
     return (
         <div>
             <div className="admin-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -48,6 +68,7 @@ const Products = () => {
                             <th>Image</th>
                             <th>Name</th>
                             <th>Category</th>
+                            <th>Stock</th>
                             <th>Price</th>
                             <th>Color</th>
                             <th>Action</th>
@@ -61,6 +82,25 @@ const Products = () => {
                                 </td>
                                 <td>{product.name}</td>
                                 <td>{product.category}</td>
+                                <td style={{ width: '100px' }}>
+                                    <input
+                                        type="number"
+                                        value={product.stock}
+                                        min="0"
+                                        onChange={(e) => {
+                                            const val = parseInt(e.target.value);
+                                            setProducts(products.map(p => p._id === product._id ? { ...p, stock: val } : p));
+                                        }}
+                                        onBlur={(e) => handleStockUpdate(product._id, parseInt(e.target.value))}
+                                        style={{
+                                            width: '60px',
+                                            padding: '4px',
+                                            border: '1px solid #ddd',
+                                            borderRadius: '4px',
+                                            textAlign: 'center'
+                                        }}
+                                    />
+                                </td>
                                 <td>₹{product.price}</td>
                                 <td>
                                     <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: product.color || '#ccc' }}></div>

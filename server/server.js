@@ -63,10 +63,12 @@ app.use('/api/products', productRoute);
 const orderRoute = require("./routes/order");
 const cartRoute = require("./routes/cart");
 const paymentRoute = require("./routes/payment");
+const statsRoute = require("./routes/stats");
 
 app.use("/api/orders", orderRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/payment", paymentRoute);
+app.use("/api/stats", statsRoute);
 
 // Start Server
 const PORT = process.env.PORT || 5000;

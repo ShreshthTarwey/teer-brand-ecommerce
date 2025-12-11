@@ -67,4 +67,74 @@ router.get('/', async (req, res) => {
   }
 });
 
+// 6. POST REVIEW (Verified Purchase Only)
+const Review = require('../models/Review');
+const Order = require('../models/Order');
+const User = require('../models/User'); // Import User model
+const { verifyToken } = require('../middleware/verifyToken');
+
+router.post('/:id/reviews', verifyToken, async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const userId = req.user.id;
+
+    // console.log(`[REVIEW CHECK] User: ${userId}, Product: ${productId}`);
+
+    // 1. Verify Purchase (Robust Manual Check)
+    const userOrders = await Order.find({ userId: userId });
+
+    let hasPurchased = false;
+    for (const order of userOrders) {
+      if (order.products.some(p => p.productId && p.productId.toString() === productId)) {
+        hasPurchased = true;
+        break;
+      }
+    }
+
+    // console.log(`[REVIEW CHECK] Manual Check Result: ${hasPurchased}`);
+
+    if (!hasPurchased) {
+      return res.status(403).json("You must purchase this product to leave a review.");
+    }
+
+    // 2. Check for Duplicate Review
+    const alreadyReviewed = await Review.findOne({ userId, productId });
+    if (alreadyReviewed) {
+      return res.status(400).json("You have already reviewed this product.");
+    }
+
+    // 3. Get Username (Handle old tokens)
+    let username = req.user.username;
+    if (!username) {
+      const currentUser = await User.findById(userId);
+      username = currentUser ? currentUser.username : "User";
+    }
+
+    // 4. Create Review
+    const newReview = new Review({
+      userId,
+      productId,
+      username: username,
+      rating: req.body.rating,
+      comment: req.body.comment
+    });
+
+    const savedReview = await newReview.save();
+    res.status(201).json(savedReview);
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// 7. GET REVIEWS
+router.get('/:id/reviews', async (req, res) => {
+  try {
+    const reviews = await Review.find({ productId: req.params.id }).sort({ createdAt: -1 });
+    res.status(200).json(reviews);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

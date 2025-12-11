@@ -46,6 +46,7 @@ router.post('/login', async (req, res) => {
       {
         id: user._id,
         isAdmin: user.isAdmin,
+        username: user.username,
       },
       process.env.JWT_SECRET,
       { expiresIn: "3d" } // Token expires in 3 days

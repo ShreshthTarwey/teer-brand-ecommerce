@@ -1,0 +1,203 @@
+.product-details-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* HERO SECTION */
+.product-hero {
+    display: flex;
+    gap: 50px;
+    margin-bottom: 60px;
+}
+
+.product-image-section {
+    flex: 1;
+}
+
+.main-img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.product-info-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-title {
+    font-family: 'Merriweather', serif;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.product-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.category-tag {
+    background: #f0f0f0;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 600;
+}
+
+.rating-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.product-desc {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.price-tag {
+    font-size: 2rem;
+    color: #e21f26;
+    margin-bottom: 20px;
+}
+
+.stock-status {
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.in-stock {
+    color: #28a745;
+}
+
+.out-of-stock {
+    color: #dc3545;
+}
+
+.add-cart-btn-large {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+    width: 100%;
+}
+
+.add-cart-btn-large:hover:not(:disabled) {
+    background-color: #e21f26;
+}
+
+.add-cart-btn-large:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* REVIEWS SECTION */
+.reviews-section {
+    border-top: 1px solid #eee;
+    padding-top: 40px;
+}
+
+.reviews-section h3 {
+    font-family: 'Merriweather', serif;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+.write-review-card {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+.write-review-card h4 {
+    margin-bottom: 15px;
+}
+
+.rating-select {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.write-review-card textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.write-review-card button {
+    background: #e21f26;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.review-card {
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.reviewer-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.review-date {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.review-text {
+    margin-top: 10px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.verified-badge {
+    display: inline-block;
+    color: #28a745;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .product-hero {
+        flex-direction: column;
+    }
+}

@@ -9,7 +9,8 @@
 .store-hero {
   width: 100%;
   height: 400px;
-  background-image: url('/images/Product_Page.png'); /* Ensure this image exists */
+  background-image: url('/images/Product_Page.png');
+  /* Ensure this image exists */
   background-size: cover;
   background-position: center;
   position: relative;
@@ -38,7 +39,7 @@
   font-family: 'Merriweather', serif;
   font-size: 3.5rem;
   /* text-shadow: 2px 2px 10px rgba(0,0,0,0.5); */
-  text-shadow: 0px 2px 4px rgba(0,0,0,0.9);
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.9);
   margin-bottom: 5px;
 }
 
@@ -69,7 +70,7 @@
   border-radius: 50px;
   border: none;
   font-size: 1rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* 3. Category Belt (Red Gradient) */
@@ -81,9 +82,10 @@
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  top: 0; /* Sticks to top when scrolling */
+  top: 0;
+  /* Sticks to top when scrolling */
   z-index: 100;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .filter-pills {
@@ -94,8 +96,8 @@
 
 .filter-pill {
   padding: 8px 18px;
-  border: 1px solid rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
   border-radius: 20px;
   cursor: pointer;
@@ -120,7 +122,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 }
 
@@ -151,31 +153,36 @@
   background: white;
   border-radius: 15px;
   padding: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   display: flex;
-  flex-direction: column; /* Stacks image, info, footer vertically */
-  height: 100%; /* Ensures all cards in a row are same height */
+  flex-direction: column;
+  /* Stacks image, info, footer vertically */
+  height: 100%;
+  /* Ensures all cards in a row are same height */
   border: 1px solid #f0f0f0;
 }
 
 .product-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
   border-color: #e21f26;
 }
 
 .product-image-container {
-  height: 260px; 
+  height: 260px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 15px;
   background-color: #fff;
-  border-radius: 10px 10px 0 0; /* Rounded top corners only */
-  overflow: hidden; /* Keeps zoom effect inside */
-  margin-bottom: 0; /* Remove bottom margin to connect with info */
+  border-radius: 10px 10px 0 0;
+  /* Rounded top corners only */
+  overflow: hidden;
+  /* Keeps zoom effect inside */
+  margin-bottom: 0;
+  /* Remove bottom margin to connect with info */
   /* margin-bottom: 15px; */
   /* background-color: #fff; */
   /* border-radius: 10px; */
@@ -189,12 +196,13 @@
   max-width: 100%;
   object-fit: contain;
   transition: transform 0.3s ease;
-  will-change: transform; /* Performance optimization */
+  will-change: transform;
+  /* Performance optimization */
 }
 
 /* Optional: Slight drop shadow on the packet to make it pop */
 .product-image {
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); 
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.1));
 }
 
 .product-card:hover .product-image {
@@ -205,7 +213,8 @@
 .product-info {
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Pushes the footer to the bottom */
+  flex-grow: 1;
+  /* Pushes the footer to the bottom */
 }
 
 .product-tag {
@@ -219,18 +228,8 @@
 
 .product-card-name {
   font-family: 'Merriweather', serif;
-  font-size: 1.1rem;
-  margin: 0 0 15px 0;
-  color: #333;
-  line-height: 1.4;
-}
-
-/* The Price & Button Row (Previously Hidden) */
-.product-price-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto; /* Forces this to the very bottom of the card */
+  margin-top: auto;
+  /* Forces this to the very bottom of the card */
   padding-top: 15px;
   border-top: 1px solid #f5f5f5;
 }
@@ -247,7 +246,8 @@
   color: white;
   border: none;
   padding: 10px 18px;
-  border-radius: 50px; /* Pill shape */
+  border-radius: 50px;
+  /* Pill shape */
   cursor: pointer;
   font-weight: 700;
   font-size: 0.9rem;
@@ -264,13 +264,20 @@
 }
 
 .add-btn svg {
-  stroke-width: 2.5px; /* Makes the cart icon slightly bolder */
+  stroke-width: 2.5px;
+  /* Makes the cart icon slightly bolder */
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
+
 .animate-spin {
   animation: spin 1s linear infinite;
 }
