@@ -56,8 +56,10 @@ app.get('/', (req, res) => {
 
 // Use Routes
 const authRoute = require('./routes/auth');
+const userRoute = require('./routes/user');
 const productRoute = require('./routes/products');
 app.use('/api/auth', authRoute);
+app.use('/api/users', userRoute);
 app.use('/api/products', productRoute);
 
 const orderRoute = require("./routes/order");

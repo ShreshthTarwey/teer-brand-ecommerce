@@ -19,7 +19,7 @@ const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
     // Allow if user is an Admin OR if the user ID matches the requested ID
     // Note: We use req.params.userId to match the route parameter in order.js
-    if (req.user.id === req.params.userId || req.user.isAdmin) {
+    if (req.user.id === req.params.id || req.user.id === req.params.userId || req.user.isAdmin) {
       next();
     } else {
       res.status(403).json("You are not allowed to do that!");

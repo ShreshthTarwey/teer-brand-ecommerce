@@ -20,6 +20,27 @@ const Checkout = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [savedAddresses, setSavedAddresses] = useState([]); // New State
+
+  // Fetch User Addresses
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        try {
+          // We re-fetch user because localStorage might be stale regarding addresses
+          const res = await fetch(`http://localhost:5000/api/users/find/${user._id}`, {
+            headers: { token: `Bearer ${user.accessToken}` }
+          });
+          const data = await res.json();
+          if (data.addresses) setSavedAddresses(data.addresses);
+        } catch (err) {
+          console.error("Failed to load addresses", err);
+        }
+      }
+    };
+    fetchAddresses();
+  }, []);
 
   const SHIPPING_COST = 50;
   const subtotal = getCartTotal();
@@ -390,6 +411,32 @@ const Checkout = () => {
               <div className="section-header">
                 <Truck size={24} />
                 <h2 className="section-title">Shipping Details</h2>
+              </div>
+
+              {/* Saved Addresses Selector */}
+              <div className="saved-addresses-selector" style={{ marginBottom: '20px' }}>
+                <label className="form-label" style={{ display: 'block', marginBottom: '10px' }}>Load Saved Address:</label>
+                <select
+                  className="form-input"
+                  onChange={(e) => {
+                    const addr = JSON.parse(e.target.value);
+                    setFormData({
+                      ...formData,
+                      address: addr.street,
+                      city: addr.city,
+                      pincode: addr.pin,
+                      // state: addr.state // If you had a state field
+                    });
+                  }}
+                  defaultValue=""
+                >
+                  <option value="" disabled>Select a saved address...</option>
+                  {savedAddresses.map((addr, idx) => (
+                    <option key={idx} value={JSON.stringify(addr)}>
+                      {addr.street}, {addr.city} ({addr.pin})
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="checkout-form">
