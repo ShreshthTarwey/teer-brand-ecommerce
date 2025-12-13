@@ -1,0 +1,98 @@
+/* Shared Auth Styles (Login, Register, Forgot Password) */
+.auth-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    padding: 20px;
+    position: relative;
+    /* Ensure z-index works */
+    z-index: 1;
+    margin-top: 20px;
+    /* spacing from header */
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    /* Slightly darker shadow */
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 2;
+}
+
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'Merriweather', serif;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background-color: white;
+    /* Force white background */
+    color: #333;
+    /* Force text color */
+    position: relative;
+    z-index: 3;
+}
+
+.form-group input:focus {
+    border-color: #e21f26;
+    outline: none;
+}
+
+.auth-btn {
+    width: 100%;
+    background: #e21f26;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.auth-btn:hover {
+    background: #c21920;
+}
+
+.auth-btn:disabled {
+    background: #ffa4a8;
+    cursor: not-allowed;
+}
+
+.error-alert {
+    background: #fff5f5;
+    color: #e21f26;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
