@@ -82,6 +82,9 @@ const Navbar = () => {
 
               {/* Dropdown Menu */}
               <div className="user-dropdown">
+                <Link to="/profile" className="user-dropdown-item">
+                  <User size={16} /> <span>My Profile</span>
+                </Link>
                 <Link to="/orders" className="user-dropdown-item">
                   <Package size={16} /> <span>My Orders</span>
                 </Link>

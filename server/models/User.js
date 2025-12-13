@@ -9,6 +9,15 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    addresses: [
+      {
+        street: String,
+        city: String,
+        state: String,
+        pin: String,
+        isDefault: { type: Boolean, default: false }
+      }
+    ]
   },
   { timestamps: true }
 );
