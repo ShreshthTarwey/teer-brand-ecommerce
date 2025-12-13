@@ -457,7 +457,7 @@ header {
 /* Fixed Background Section */
 .fixed-background {
     height: 100vh;
-    background-image: url("images/Fixed_background1_index.png");
+    background-image: url("/images/fixed_background1_index.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
