@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-// import './Auth.css'; // Make sure this is uncommented if you need it
+import './AuthStyles.css'; // Use the new shared styles
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ const Login = () => {
 
       // REDIRECT & FORCE RELOAD (To update Navbar state instantly)
       setLoading(false);
-      window.location.replace("/"); 
+      window.location.replace("/");
 
     } catch (err) {
       setLoading(false);
@@ -48,21 +48,21 @@ const Login = () => {
           <form onSubmit={handleLogin}>
             <div className="input-group">
               <label>Email Address</label>
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                required 
+              <input
+                type="email"
+                placeholder="Enter your email"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            
+
             <div className="input-group">
               <label>Password</label>
-              <input 
-                type="password" 
-                placeholder="Enter your password" 
-                required 
+              <input
+                type="password"
+                placeholder="Enter your password"
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -71,8 +71,14 @@ const Login = () => {
             <button type="submit" className="auth-btn" disabled={loading}>
               {loading ? "LOGGING IN..." : "LOGIN"}
             </button>
-            
-            {error && <span style={{color: 'red', marginTop: '10px', display: 'block', textAlign: 'center'}}>Wrong credentials! Please try again.</span>}
+
+            {error && <span style={{ color: 'red', marginTop: '10px', display: 'block', textAlign: 'center' }}>Wrong credentials! Please try again.</span>}
+
+            <div style={{ marginTop: '15px', textAlign: 'center' }}>
+              <Link to="/forgot-password" style={{ color: '#e21f26', textDecoration: 'none', fontSize: '0.9rem' }}>
+                Forgot Password?
+              </Link>
+            </div>
           </form>
 
           <div className="auth-footer">

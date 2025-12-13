@@ -16,6 +16,8 @@ import Checkout from './pages/Checkout';
 import MyOrders from './pages/MyOrders';
 import ProductDetails from './pages/ProductDetails';
 import UserProfile from './pages/UserProfile';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import PublicLayout from './components/PublicLayout'; // Import Layout
 // Admin Imports
 import AdminLayout from './pages/admin/AdminLayout';
@@ -46,6 +48,8 @@ function App() {
             <Route path='/orders' element={<MyOrders />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/profile" element={<UserProfile />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
           </Route>
 
           {/* Admin Routes - Standalone (No Public Navbar/Footer) */}

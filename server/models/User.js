@@ -17,7 +17,9 @@ const UserSchema = new mongoose.Schema(
         pin: String,
         isDefault: { type: Boolean, default: false }
       }
-    ]
+    ],
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date }
   },
   { timestamps: true }
 );
