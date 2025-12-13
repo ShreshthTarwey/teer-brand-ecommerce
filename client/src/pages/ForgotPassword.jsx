@@ -30,10 +30,10 @@ const ForgotPassword = () => {
             };
 
             await emailjs.send(
-                "service_w11ztee",
-                "template_mpjv6s1",     // USER PROVIDED ID
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID_RESET,
                 templateParams,
-                "d7gZ3l4sWs6vNFFTB"
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
             );
 
             setStatus("success");

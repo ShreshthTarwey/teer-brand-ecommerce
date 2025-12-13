@@ -58,7 +58,7 @@ const Navbar = () => {
           <li><Link to="/events">EVENTS & AWARDS</Link></li>
           <li><Link to="/media">MEDIA</Link></li>
           <li><Link to="/news">NEWS</Link></li>
-          <li><Link to="/contact">CONTACT US</Link></li>
+          <li><Link to="/contact-us">CONTACT US</Link></li>
         </ul>
 
         {/* --- FIXED ACTIONS SECTION --- */}

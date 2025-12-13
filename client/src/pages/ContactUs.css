@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+.contact-hero {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-image: url('../assets/Contact_us_image_1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent overlay */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.contact-section-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    background-color: #4a64b0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow: hidden;
+}
+
+.content-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+}
+
+.text-content {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+}
+
+.text-content h2 {
+    font-family: 'Merriweather', serif;
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.text-content p {
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.map-container {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+    perspective: 1000px;
+}
+
+.map-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.map-header {
+    padding: 16px;
+}
+
+.map-header h3 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.map-header p {
+    font-family: 'Open Sans', sans-serif;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.rating-score {
+    margin-right: 5px;
+}
+
+.stars {
+    color: #e7711b;
+    margin-right: 5px;
+}
+
+.review-count {
+    color: #1a73e8;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.view-map {
+    color: #1a73e8;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: block;
+}
+
+.map-image {
+    width: 100%;
+    height: 300px;
+    background-color: #f1f1f1;
+    position: relative;
+    overflow: hidden;
+}
+
+.directions-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: #1a73e8;
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.map-footer {
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #666;
+    border-top: 1px solid #eee;
+}
+
+.contact-details-section {
+    padding: 60px 0;
+    text-align: center;
+    background-color: white;
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.3) 2px, transparent 2px);
+    background-size: 25px 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-details-section h2 {
+    font-size: 48px;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.us-red {
+    color: #e21f26;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.contact-column {
+    flex: 1;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.contact-column h3 {
+    font-size: 18px;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.contact-info {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.contact-icon {
+    min-width: 50px;
+    margin-right: 15px;
+}
+
+.contact-icon i,
+.contact-icon svg {
+    font-size: 40px;
+    color: #ec3136;
+}
+
+.contact-detail p {
+    font-size: 18px;
+    color: #392323;
+    line-height: 1.6;
+    margin-bottom: 5px;
+}
+
+/* Animations */
+.animate {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
+/* Parallax Elements */
+.parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3f51b5 0%, #5677fc 100%);
+    z-index: 0;
+    transition: transform 0.2s ease-out;
+}
+
+.parallax-dots {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.dot {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+.shine {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 1;
+    transition: transform 0.5s ease-out;
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .contact-container {
+        flex-direction: column;
+    }
+
+    .contact-column {
+        margin-bottom: 40px;
+    }
+}

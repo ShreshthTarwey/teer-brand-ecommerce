@@ -371,7 +371,12 @@ const Checkout = () => {
       order_list: productListHTML
     };
 
-    emailjs.send("service_w11ztee", "template_w54oyky", emailParams, "d7gZ3l4sWs6vNFFTB")
+    emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID_ORDER,
+      emailParams,
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    )
       .then(() => console.log("Email sent"))
       .catch((e) => console.error("Email failed", e));
   };

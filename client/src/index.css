@@ -29,8 +29,8 @@
     color: #666;
     position: absolute;
     /* Adjust these to place it perfectly next to the 80px logo */
-    top: 35px;   
-    right: -20px; 
+    top: 35px;
+    right: -20px;
     white-space: nowrap;
 }
 
@@ -53,7 +53,7 @@ header {
     border-bottom: 1px solid #f0f0f0;
     position: relative;
     /* Ensure header is tall enough for the logo */
-    min-height: 100px; 
+    min-height: 100px;
 }
 
 .logo {
@@ -63,7 +63,7 @@ header {
     gap: 15px;
     margin-right: 30px;
     /* Prevent the logo container from being squashed */
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 
 .logo a {
@@ -73,11 +73,14 @@ header {
 }
 
 /* Force the image size */
-.nav-logo-img, 
+.nav-logo-img,
 .logo img {
-    height: 80px !important; /* Force 80px height */
-    width: auto;             /* Keep aspect ratio */
-    max-width: none;         /* Stop it from shrinking */
+    height: 80px !important;
+    /* Force 80px height */
+    width: auto;
+    /* Keep aspect ratio */
+    max-width: none;
+    /* Stop it from shrinking */
     margin-right: 45px;
     object-fit: contain;
 }
@@ -88,8 +91,8 @@ header {
     font-weight: 600;
     color: #888;
     position: static;
-    top: 32px;   
-    right: -10px; 
+    top: 32px;
+    right: -10px;
     white-space: nowrap;
 
     /* border-left: 2px solid #e21f26; */
@@ -104,8 +107,8 @@ header {
     header {
         min-height: 80px;
     }
-    
-    .nav-logo-img, 
+
+    .nav-logo-img,
     .logo img {
         height: 60px !important;
         margin-right: 35px;
@@ -123,8 +126,8 @@ header {
     font-size: 12px;
     color: #666;
     position: absolute;
-    top: 25px;   
-    right: -20px; 
+    top: 25px;
+    right: -20px;
     white-space: nowrap;
 }
 
@@ -192,7 +195,7 @@ header {
     position: absolute;
     background-color: white;
     min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: 1;
     top: 100%;
     left: 0;
@@ -218,7 +221,7 @@ header {
         height: 70px;
         margin-right: 40px;
     }
-    
+
     .since-text {
         font-size: 11px;
         top: 22px;
@@ -300,7 +303,7 @@ header {
         height: 60px;
         margin-right: 35px;
     }
-    
+
     .since-text {
         font-size: 10px;
         top: 20px;
@@ -313,7 +316,7 @@ header {
         height: 50px;
         margin-right: 30px;
     }
-    
+
     .since-text {
         font-size: 9px;
         top: 18px;
@@ -329,7 +332,7 @@ header {
     font-weight: bold;
     text-decoration: none;
     margin-left: 15px;
-    display: inline-block; 
+    display: inline-block;
     line-height: normal;
     vertical-align: middle;
 }
@@ -812,32 +815,36 @@ header {
     margin: 0 auto;
 }
 
+/* Removed duplicate product grid styles */
+
 .product-grid-item {
     position: relative;
-    height: 300px;
+    height: 350px !important;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* Pushes image up and title down */
-    padding: 20px;
+    justify-content: flex-start !important;
+    padding: 10px !important;
     border-radius: 10px;
     transition: transform 0.3s ease;
-    overflow: hidden; /* CRITICAL: Prevents image from cutting out of border */
+    overflow: hidden;
 }
 
 .product-grid-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Added shadow for pop effect */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .product-image {
-    width: 100%;
-    flex: 1; /* CRITICAL: Takes remaining height automatically */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px; /* Reduced slightly to give more room */
-    overflow: hidden; 
+    width: 100% !important;
+    height: 250px !important;
+    /* Force large image area */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+    overflow: hidden !important;
+    flex: none !important;
 }
 
 .product-image a {
@@ -849,31 +856,45 @@ header {
 }
 
 .product-image img {
-    max-width: 85%; /* Prevents touching the edges */
-    max-height: 100%;
-    object-fit: contain;
+    max-width: 95% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
     transition: transform 0.3s ease;
-    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2)); /* Adds depth to the packet */
+    filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
 }
 
 .product-image img:hover {
-    transform: scale(1.1); /* Zoom effect */
+    transform: scale(1.1);
 }
 
 .product-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: white;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-    padding: 8px 10px;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.15); /* Slightly clearer background */
+    font-family: 'Merriweather', 'Georgia', serif !important;
+    /* SERIF FONT match */
+    font-size: 18px !important;
+    /* Larger for Serif */
+    font-weight: 900 !important;
+    /* Extra Bold */
+    color: white !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7) !important;
+    /* Strong shadow */
+    padding: 4px 10px !important;
+    width: auto !important;
+    /* Don't stretch full width */
+    max-width: 90% !important;
+    background: rgba(0, 0, 0, 0.2) !important;
     border-radius: 5px;
-    z-index: 2; /* Ensures title stays on top */
+    z-index: 2;
+    min-height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    margin-top: auto !important;
 }
+
 /* Responsive Styles */
 @media (max-width: 1024px) {
     nav ul li {
@@ -1003,8 +1024,8 @@ header {
 } */
 /* .icon-hover {
     color: #007BFF; /* Base Color */
-    /* transition: color 0.3s ease-in-out; */
-/* } */ 
+/* transition: color 0.3s ease-in-out; */
+/* } */
 
 /* NEW CSS FOR BENCHMARK SECTION */
 .benchmark-section {
@@ -1540,7 +1561,8 @@ header {
     animation: scrollRight 20s linear infinite;
 }
 
-.container:hover .scroll, .container:hover .reverse {
+.container:hover .scroll,
+.container:hover .reverse {
     animation-play-state: paused;
 }
 
@@ -1555,13 +1577,23 @@ header {
 }
 
 @keyframes scrollLeft {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 @keyframes scrollRight {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(0); }
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
 /* 4. CATEGORIES (FIXED STYLING) */
@@ -1573,7 +1605,7 @@ header {
     background: linear-gradient(45deg, #ff6b6b, #ff4757);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(255, 107, 107, 0.15),
-                0 5px 15px rgba(0, 0, 0, 0.05);
+        0 5px 15px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: center;
     position: relative;
@@ -1606,7 +1638,7 @@ header {
     border-radius: 30px;
     transition: all 0.3s ease;
     white-space: nowrap;
-    
+
     /* Glassmorphism Effect */
     background-color: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -1739,8 +1771,8 @@ header {
 
 .auth-container {
     width: 100%;
-    min-height: 80vh; 
-    background-image: url('/images/Product_Page.png'); 
+    min-height: 80vh;
+    background-image: url('/images/Product_Page.png');
     background-size: cover;
     background-position: center;
     position: relative;
@@ -1757,7 +1789,8 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Darker overlay for readability */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Darker overlay for readability */
 }
 
 .auth-wrapper {
@@ -1771,7 +1804,7 @@ header {
     background-color: white;
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
@@ -1868,9 +1901,12 @@ header {
 
 /* 2. Fix Logo Size */
 .nav-logo-img {
-    height: 80px; /* Force original height */
-    width: auto;  /* Maintain aspect ratio */
-    max-width: none; /* Prevent it from shrinking */
+    height: 80px;
+    /* Force original height */
+    width: auto;
+    /* Maintain aspect ratio */
+    max-width: none;
+    /* Prevent it from shrinking */
 }
 
 /* 3. Show Close Button ONLY on Mobile */
@@ -1885,7 +1921,7 @@ header {
         right: 20px;
         cursor: pointer;
     }
-    
+
     /* Adjust logo for mobile if needed */
     .nav-logo-img {
         height: 60px;
@@ -1919,7 +1955,7 @@ header {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .cart-item {
@@ -2006,7 +2042,7 @@ header {
     background: white;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     height: fit-content;
 }
 
@@ -2107,8 +2143,9 @@ header {
     .cart-container {
         flex-direction: column;
     }
-    
-    .cart-items, .order-summary {
+
+    .cart-items,
+    .order-summary {
         width: 100%;
     }
 }
