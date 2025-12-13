@@ -723,7 +723,7 @@ header {
 }
 
 .stats-background {
-    background-image: url('images/spices_in_spoons.png');
+    background-image: url('/images/spices_in_spoons.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
