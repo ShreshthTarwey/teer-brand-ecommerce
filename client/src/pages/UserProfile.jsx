@@ -32,7 +32,7 @@ const UserProfile = () => {
                 const currentUser = JSON.parse(localStorage.getItem("user"));
                 if (!currentUser) return;
 
-                const res = await axios.get(`http://localhost:5000/api/users/find/${currentUser._id}`, getAuthHeader());
+                const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/find/${currentUser._id}`, getAuthHeader());
                 setUser(res.data);
                 setFormData({ username: res.data.username, email: res.data.email, password: '' });
                 setLoading(false);
@@ -52,7 +52,7 @@ const UserProfile = () => {
             const updateData = { ...formData };
             if (!updateData.password) delete updateData.password; // Don't send empty password
 
-            const res = await axios.put(`http://localhost:5000/api/users/${currentUser._id}`, updateData, getAuthHeader());
+            const res = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/users/${currentUser._id}`, updateData, getAuthHeader());
             alert("Profile Updated Successfully!");
 
             // Update Local Storage (name might have changed)
@@ -69,7 +69,7 @@ const UserProfile = () => {
         e.preventDefault();
         try {
             const currentUser = JSON.parse(localStorage.getItem("user"));
-            const res = await axios.put(`http://localhost:5000/api/users/${currentUser._id}/address`, newAddress, getAuthHeader());
+            const res = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/users/${currentUser._id}/address`, newAddress, getAuthHeader());
 
             setUser(prev => ({ ...prev, addresses: res.data.addresses }));
             setShowAddressForm(false);
@@ -86,7 +86,7 @@ const UserProfile = () => {
         if (!window.confirm("Delete this address?")) return;
         try {
             const currentUser = JSON.parse(localStorage.getItem("user"));
-            await axios.delete(`http://localhost:5000/api/users/${currentUser._id}/address/${addressId}`, getAuthHeader());
+            await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/users/${currentUser._id}/address/${addressId}`, getAuthHeader());
 
             setUser(prev => ({
                 ...prev,

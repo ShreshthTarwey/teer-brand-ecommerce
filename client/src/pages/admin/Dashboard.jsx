@@ -20,7 +20,7 @@ const Dashboard = () => {
         const fetchStats = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem('user'));
-                const res = await axios.get('http://localhost:5000/api/stats', {
+                const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/stats`, {
                     headers: { token: `Bearer ${user.accessToken}` }
                 });
                 setStats(res.data);

@@ -34,7 +34,7 @@ const Home = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/products");
+                const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
                 // ONLY TAKE THE FIRST 12 PRODUCTS
                 setFeaturedProducts(res.data.slice(0, 12));
             } catch (err) {

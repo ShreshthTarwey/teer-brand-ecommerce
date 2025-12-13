@@ -18,7 +18,7 @@ const NewProduct = () => {
         e.preventDefault();
         try {
             const user = JSON.parse(localStorage.getItem('user'));
-            await axios.post('http://localhost:5000/api/products', inputs, {
+            await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/products`, inputs, {
                 headers: { token: `Bearer ${user.accessToken}` }
             });
             navigate('/admin/products');

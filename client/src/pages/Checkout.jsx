@@ -29,7 +29,7 @@ const Checkout = () => {
       if (user) {
         try {
           // We re-fetch user because localStorage might be stale regarding addresses
-          const res = await fetch(`http://localhost:5000/api/users/find/${user._id}`, {
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/find/${user._id}`, {
             headers: { token: `Bearer ${user.accessToken}` }
           });
           const data = await res.json();
@@ -109,7 +109,7 @@ const Checkout = () => {
 
   //   try {
   //     // 5. SEND TO BACKEND
-  //     const response = await fetch('http://localhost:5000/api/orders', {
+  //     const response = await fetch', {
   //       method: 'POST',
   //       headers: {
   //         'Content-Type': 'application/json',
@@ -168,7 +168,7 @@ const Checkout = () => {
 
   //   try {
   //     // 1. SAVE TO MONGODB (Backend)
-  //     const response = await fetch('http://localhost:5000/api/orders', {
+  //     const response = await fetch(', {
   //       method: 'POST',
   //       headers: {
   //         'Content-Type': 'application/json',
@@ -239,7 +239,7 @@ const Checkout = () => {
 
     try {
       // 2. CREATE ORDER ON BACKEND (Get Razorpay Order ID)
-      const orderResponse = await fetch('http://localhost:5000/api/payment/orders', {
+      const orderResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/payment/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: total })
@@ -259,7 +259,7 @@ const Checkout = () => {
         handler: async function (response) {
           // 4. VERIFY PAYMENT ON BACKEND
           try {
-            const verifyRes = await fetch('http://localhost:5000/api/payment/verify', {
+            const verifyRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/payment/verify`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -329,7 +329,7 @@ const Checkout = () => {
         paymentId: paymentId
       };
 
-      const response = await fetch('http://localhost:5000/api/orders', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ const Orders = () => {
         const fetchOrders = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem('user'));
-                const res = await axios.get('http://localhost:5000/api/orders', {
+                const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders`, {
                     headers: { token: `Bearer ${user.accessToken}` }
                 });
                 setOrders(res.data);
@@ -35,7 +35,7 @@ const Orders = () => {
             // But User Rule 4 said: "Assume the Backend Routes ... already exist (I will handle the backend logic separately if needed)".
             // So I will code the request.
 
-            await axios.put(`http://localhost:5000/api/orders/${orderId}`, { status: newStatus }, {
+            const res = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/orders/${orderId}`, { status: newStatus }, {
                 headers: { token: `Bearer ${user.accessToken}` }
             });
             // Updating local state to reflect change immediately for better UX

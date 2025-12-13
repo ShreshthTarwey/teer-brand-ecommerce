@@ -15,7 +15,7 @@ const MyOrders = () => {
 
     try {
       const user = JSON.parse(localStorage.getItem("user"));
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/cancel`, {}, {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/orders/${orderId}/cancel`, {}, {
         headers: { token: `Bearer ${user.accessToken}` }
       });
 
@@ -41,7 +41,7 @@ const MyOrders = () => {
 
       try {
         // 2. Fetch Orders from Backend
-        const res = await axios.get(`http://localhost:5000/api/orders/find/${user._id}`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/orders/find/${user._id}`, {
           headers: { token: `Bearer ${user.accessToken}` }
         });
 

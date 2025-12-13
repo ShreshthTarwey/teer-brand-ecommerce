@@ -13,15 +13,15 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(false);
-    
+
     try {
       // 1. Send data to Backend
-      const res = await axios.post("http://localhost:5000/api/auth/register", {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, {
         username,
         email,
         password,
       });
-      
+
       // 2. If successful, redirect to Login
       if (res.data) {
         navigate("/login");
@@ -45,10 +45,10 @@ const Register = () => {
           <form onSubmit={handleRegister}>
             <div className="input-group">
               <label>Full Name</label>
-              <input 
-                type="text" 
-                placeholder="Shreshth Tarwey" 
-                required 
+              <input
+                type="text"
+                placeholder="Shreshth Tarwey"
+                required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -56,21 +56,21 @@ const Register = () => {
 
             <div className="input-group">
               <label>Email Address</label>
-              <input 
-                type="email" 
-                placeholder="example@gmail.com" 
-                required 
+              <input
+                type="email"
+                placeholder="example@gmail.com"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            
+
             <div className="input-group">
               <label>Password</label>
-              <input 
-                type="password" 
-                placeholder="Create a strong password" 
-                required 
+              <input
+                type="password"
+                placeholder="Create a strong password"
+                required
                 minLength="6"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -79,7 +79,7 @@ const Register = () => {
 
             <button type="submit" className="auth-btn">REGISTER</button>
 
-            {error && <span style={{color: 'red', marginTop: '10px', display: 'block', textAlign: 'center'}}>Something went wrong! (Email might be taken)</span>}
+            {error && <span style={{ color: 'red', marginTop: '10px', display: 'block', textAlign: 'center' }}>Something went wrong! (Email might be taken)</span>}
           </form>
 
           <div className="auth-footer">

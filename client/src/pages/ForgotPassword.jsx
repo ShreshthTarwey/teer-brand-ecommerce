@@ -16,7 +16,7 @@ const ForgotPassword = () => {
 
         try {
             // 1. Request Token from Backend
-            const res = await axios.post("http://localhost:5000/api/auth/forgot-password-init", { email });
+            const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/forgot-password-init`, { email });
 
             const { token, username } = res.data;
 

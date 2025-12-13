@@ -10,7 +10,7 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
-  const BASE_URL = "http://localhost:5000/api";
+  const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api`;
 
   // 1. INITIAL LOAD
   useEffect(() => {
@@ -184,5 +184,5 @@ export const CartProvider = ({ children }) => {
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
-  
+
 };

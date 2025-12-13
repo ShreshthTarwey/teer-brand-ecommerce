@@ -19,7 +19,7 @@ const EditProduct = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/products/find/${id}`);
+                const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products/find/${id}`);
                 setInputs(res.data);
                 setLoading(false);
             } catch (err) {
@@ -42,7 +42,7 @@ const EditProduct = () => {
         try {
             const user = JSON.parse(localStorage.getItem('user'));
             // Standardizing PUT route: /api/products/:id
-            await axios.put(`http://localhost:5000/api/products/${id}`, inputs, {
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}`, inputs, {
                 headers: { token: `Bearer ${user.accessToken}` }
             });
             navigate('/admin/products');

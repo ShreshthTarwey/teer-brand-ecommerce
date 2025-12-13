@@ -21,7 +21,7 @@ const OnlineStore = () => {
     const fetchProducts = async () => {
       try {
         // Calling your "Chef" (Node.js)
-        const res = await axios.get("http://localhost:5000/api/products");
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
         setProducts(res.data); // Save the food (data)
         setLoading(false); // Stop loading spinner
 

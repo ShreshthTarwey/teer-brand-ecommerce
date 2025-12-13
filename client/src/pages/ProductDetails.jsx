@@ -21,8 +21,8 @@ const ProductDetails = () => {
         const fetchProductAndReviews = async () => {
             try {
                 const [prodRes, revRes] = await Promise.all([
-                    axios.get(`http://localhost:5000/api/products/find/${id}`),
-                    axios.get(`http://localhost:5000/api/products/${id}/reviews`)
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products/find/${id}`),
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}/reviews`)
                 ]);
                 setProduct(prodRes.data);
                 setReviews(revRes.data);
@@ -46,7 +46,7 @@ const ProductDetails = () => {
                 return;
             }
 
-            const res = await axios.post(`http://localhost:5000/api/products/${id}/reviews`,
+            const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}/reviews`,
                 { rating, comment },
                 { headers: { token: `Bearer ${user.accessToken}` } }
             );

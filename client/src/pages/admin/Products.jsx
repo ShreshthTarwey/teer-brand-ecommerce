@@ -9,7 +9,7 @@ const Products = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/products');
+                const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
                 setProducts(res.data);
             } catch (err) {
                 console.error(err);
@@ -23,7 +23,7 @@ const Products = () => {
 
         try {
             const user = JSON.parse(localStorage.getItem('user'));
-            await axios.delete(`http://localhost:5000/api/products/${id}`, {
+            await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}`, {
                 headers: { token: `Bearer ${user.accessToken}` }
             });
             setProducts(products.filter(p => p._id !== id));
@@ -41,7 +41,7 @@ const Products = () => {
             // But a quicker way for now is to trust our Product PUT route.
             // Let's check Product PUT route... (I'll assume standard PUT updates fields provided)
 
-            await axios.put(`http://localhost:5000/api/products/${id}`,
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}`,
                 { stock: newStock },
                 { headers: { token: `Bearer ${user.accessToken}` } }
             );
