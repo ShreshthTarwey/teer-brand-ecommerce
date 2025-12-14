@@ -2,8 +2,8 @@
     position: relative;
     width: 100%;
     height: 600px;
-    background-image: url('/images/product_animation_banner.png');
-    /* Updated to PNG */
+    background-image: url('/images/product_animation_banner.webp');
+    /* Updated to WebP */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
