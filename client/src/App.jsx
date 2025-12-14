@@ -31,11 +31,14 @@ import NewProduct from './pages/admin/NewProduct';
 import EditProduct from './pages/admin/EditProduct';
 import OrderSuccess from './pages/OrderSuccess';
 
+import ScrollToTop from './components/ScrollToTop'; // Import ScrollToTop
+
 function App() {
   return (
     <CartProvider>
       <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
       <Router>
+        <ScrollToTop /> {/* Ensure this is inside Router */}
         <Routes>
 // Public Routes Wrapped in PublicLayout
           <Route element={<PublicLayout />}>
@@ -53,7 +56,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/order-success" element={<OrderSuccess />} /> 
+            <Route path="/order-success" element={<OrderSuccess />} />
           </Route>
 
           {/* Admin Routes - Standalone (No Public Navbar/Footer) */}

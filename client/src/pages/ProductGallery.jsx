@@ -16,30 +16,20 @@ const ProductGallery = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // The 'cat' variable is not defined in this scope.
-        // Assuming 'cat' was intended to be passed as an argument or derived within this function,
-        // but for faithful replacement, we'll use a placeholder or assume it's meant to be 'category' state.
-        // However, the original fetch was for all products, and the new line introduces a conditional.
-        // To make the provided line syntactically correct and functional in its current context,
-        // we'll interpret 'cat' as the current 'category' state for the query parameter,
-        // and fix the trailing `(res.data);` to `setProducts(res.data);`.
-        const currentCategoryForFetch = category === 'ALL' ? '' : category; // Only add category param if not 'ALL'
-
-        const res = await axios.get(currentCategoryForFetch ? `${import.meta.env.VITE_API_BASE_URL}/api/products?category=${currentCategoryForFetch}` : `${import.meta.env.VITE_API_BASE_URL}/api/products`);
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
         setProducts(res.data);
       } catch (err) {
         console.error("Error fetching products:", err);
       }
     };
     fetchProducts();
-  }, [category]); // Added category to dependency array to refetch when category changes
+  }, []); // Run only once on mount
 
-  // URL PARAMETER LOGIC (Updated to wait for Products)
+  // URL PARAMETER LOGIC
   const location = useLocation();
 
   useEffect(() => {
     // 1. Safety Check: If products aren't loaded yet, DON'T scroll.
-    // The effect will run again once 'products' changes (see dependency array).
     if (products.length === 0) return;
 
     const params = new URLSearchParams(location.search);
@@ -55,7 +45,7 @@ const ProductGallery = () => {
       if (map[catParam]) {
         setCategory(map[catParam]);
 
-        // 2. Scroll logic with a tiny delay to ensure layout is stable
+        // 2. Scroll logic
         setTimeout(() => {
           const element = document.getElementById('category-section');
           if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -64,9 +54,9 @@ const ProductGallery = () => {
     } else {
       setCategory('ALL');
     }
-  }, [location, products]); // <--- CRITICAL: 'products' added here
+  }, [location, products]); // Run when URL changes or products load
 
-  // FILTER LOGIC
+  // FILTER LOGIC - Client Side
   const filteredProducts = category === 'ALL'
     ? products
     : products.filter(p => p.category === category);
