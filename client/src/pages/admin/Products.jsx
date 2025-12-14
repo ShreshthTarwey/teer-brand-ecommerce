@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import './admin.css';
 
 const Products = () => {
@@ -27,9 +28,10 @@ const Products = () => {
                 headers: { token: `Bearer ${user.accessToken}` }
             });
             setProducts(products.filter(p => p._id !== id));
+            toast.success("Product Deleted");
         } catch (err) {
             console.error("Delete failed", err);
-            alert("Failed to delete product");
+            toast.error("Failed to delete product");
         }
     };
 
@@ -47,9 +49,10 @@ const Products = () => {
             );
 
             setProducts(products.map(p => p._id === id ? { ...p, stock: newStock } : p));
+            toast.success("Stock Updated");
         } catch (err) {
             console.error(err);
-            alert("Failed to update stock");
+            toast.error("Failed to update stock");
         }
     };
 

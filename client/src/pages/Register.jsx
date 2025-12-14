@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 // import './Auth.css'; // Make sure this is uncommented if you need it
 
 const Register = () => {
@@ -16,17 +17,15 @@ const Register = () => {
 
     try {
       // 1. Send data to Backend
-      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, {
         username,
         email,
         password,
       });
-
-      // 2. If successful, redirect to Login
-      if (res.data) {
-        navigate("/login");
-      }
+      toast.success("Registration Successful! Please Login.");
+      navigate('/login');
     } catch (err) {
+      toast.error("Registration Failed. Try again.");
       console.error(err);
       setError(true); // Show error message
     }

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './ContactUs.css';
-import { Phone, Globe, Mail, MapPin } from 'lucide-react';
+import { Phone, Globe, Mail, MapPin, Send } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const ContactUs = () => {
     useEffect(() => {

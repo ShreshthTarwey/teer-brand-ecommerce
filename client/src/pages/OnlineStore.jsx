@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Search, ShoppingCart, ArrowRight, Loader2 } from 'lucide-react'; // Added Loader2 icon
 import axios from 'axios'; // <--- IMPORT AXIOS
 import { useCart } from '../context/CartContext';
+import toast from 'react-hot-toast';
 import "./OnlineStore.css";
 
 const OnlineStore = () => {
@@ -131,17 +132,22 @@ const OnlineStore = () => {
 
                   <div className="product-price-row">
                     <span className="product-price">₹{product.price}</span>
+
+
                     <button
                       className="add-btn"
                       disabled={product.stock === 0}
                       style={product.stock === 0 ? { opacity: 0.5, cursor: 'not-allowed', background: '#ccc' } : {}}
-                      onClick={() => addToCart({
-                        id: product._id, // Map MongoDB _id to Cart id
-                        name: product.name,
-                        price: product.price,
-                        img: product.img,
-                        category: product.category
-                      })}
+                      onClick={() => {
+                        addToCart({
+                          id: product._id, // Map MongoDB _id to Cart id
+                          name: product.name,
+                          price: product.price,
+                          img: product.img,
+                          category: product.category
+                        });
+                        toast.success("Added to Cart!");
+                      }}
                     >
                       <ShoppingCart size={16} /> {product.stock === 0 ? 'SOLD OUT' : 'ADD'}
                     </button>

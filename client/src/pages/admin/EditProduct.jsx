@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import './admin.css';
 
 const EditProduct = () => {
@@ -24,7 +25,7 @@ const EditProduct = () => {
                 setLoading(false);
             } catch (err) {
                 console.error(err);
-                alert("Failed to load product");
+                toast.error("Failed to load product");
             }
         };
         fetchProduct();
@@ -45,10 +46,11 @@ const EditProduct = () => {
             await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}`, inputs, {
                 headers: { token: `Bearer ${user.accessToken}` }
             });
+            toast.success("Product Updated Successfully!");
             navigate('/admin/products');
         } catch (err) {
             console.error(err);
-            alert("Error updating product");
+            toast.error("Error updating product");
         }
     };
 

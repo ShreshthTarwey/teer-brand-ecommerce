@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import emailjs from '@emailjs/browser';
-import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import toast from 'react-hot-toast';
 import './AuthStyles.css'; // Re-use auth styles
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
-    const [status, setStatus] = useState("idle"); // idle, loading, success, error
-    const [message, setMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false); // Use a dedicated loading state
 
     const handleResetRequest = async (e) => {
         e.preventDefault();
-        setStatus("loading");
-        setMessage("");
+        setIsLoading(true);
 
         try {
             // 1. Request Token from Backend
@@ -35,14 +33,15 @@ const ForgotPassword = () => {
                 templateParams,
                 import.meta.env.VITE_EMAILJS_PUBLIC_KEY
             );
+            console.log("EmailJS Success!", res);
 
-            setStatus("success");
-            setMessage("Password reset link sent to your email!");
+            toast.success("Password reset link sent to your email!");
 
         } catch (err) {
             console.error(err);
-            setStatus("error");
-            setMessage(err.response?.data || "Something went wrong. Please check the email.");
+            toast.error("Failed to send reset link. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
     };
 

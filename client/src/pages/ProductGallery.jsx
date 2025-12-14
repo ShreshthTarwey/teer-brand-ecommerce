@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useCart } from '../context/CartContext'; // Import Cart Context
+import toast from 'react-hot-toast';
 
 const ProductGallery = () => {
   const [category, setCategory] = useState('ALL');
@@ -167,18 +168,22 @@ const ProductGallery = () => {
               <div className="icons">
                 <button className="icon search" onClick={() => setModalImage(product.img)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>🔍</button>
 
+
                 {/* ADD TO CART */}
                 <button
                   className="icon link"
                   title="Add to Cart"
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'white' }}
-                  onClick={() => addToCart({
-                    id: product._id, // Map MongoDB _id
-                    name: product.name,
-                    price: product.price,
-                    img: product.img,
-                    category: product.category
-                  })}
+                  onClick={() => {
+                    addToCart({
+                      id: product._id, // Map MongoDB _id
+                      name: product.name,
+                      price: product.price,
+                      img: product.img,
+                      category: product.category
+                    });
+                    toast.success("Added to Cart!");
+                  }}
                 >
                   🛒
                 </button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 // --- IMPORT YOUR COMPONENTS HERE ---
 import Navbar from './components/Navbar';
@@ -28,13 +29,15 @@ import Orders from './pages/admin/Orders';
 import Products from './pages/admin/Products';
 import NewProduct from './pages/admin/NewProduct';
 import EditProduct from './pages/admin/EditProduct';
+import OrderSuccess from './pages/OrderSuccess';
 
 function App() {
   return (
     <CartProvider>
+      <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
       <Router>
         <Routes>
-          {/* Public Routes Wrapped in PublicLayout */}
+// Public Routes Wrapped in PublicLayout
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/who-we-are" element={<WhoWeAre />} />
@@ -44,14 +47,13 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/store" element={<OnlineStore />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/checkout" element={<Checkout />} />
             <Route path='/orders' element={<MyOrders />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/order-success" element={<OrderSuccess />} /> 
           </Route>
 
           {/* Admin Routes - Standalone (No Public Navbar/Footer) */}

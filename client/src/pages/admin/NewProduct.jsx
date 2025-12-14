@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import './admin.css';
 
 const NewProduct = () => {
@@ -21,10 +22,11 @@ const NewProduct = () => {
             await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/products`, inputs, {
                 headers: { token: `Bearer ${user.accessToken}` }
             });
+            toast.success("Product Created Successfully!");
             navigate('/admin/products');
         } catch (err) {
             console.error(err);
-            alert("Error creating product");
+            toast.error("Failed to create product");
         }
     };
 

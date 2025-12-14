@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Truck, CreditCard, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext'; // <--- USE REAL CONTEXT
+import toast from 'react-hot-toast';
 import './Checkout.css';
 import emailjs from '@emailjs/browser';
 
@@ -226,7 +227,7 @@ const Checkout = () => {
     // 1. Auth Check
     const userDataString = localStorage.getItem('user');
     if (!userDataString) {
-      alert('Please login to continue');
+      toast.error('Please login to continue');
       navigate('/login');
       return;
     }
@@ -275,11 +276,11 @@ const Checkout = () => {
               // 5. IF VERIFIED, SAVE ORDER TO DATABASE
               await saveOrderToDB(userId, token, response.razorpay_payment_id, userData);
             } else {
-              alert("Payment verification failed!");
+              toast.error("Payment verification failed!");
             }
           } catch (error) {
             console.error("Verification Error", error);
-            alert("Payment verification error");
+            toast.error("Payment verification error");
           }
         },
         prefill: {
@@ -293,7 +294,7 @@ const Checkout = () => {
       };
 
       if (!window.Razorpay) {
-        alert("Razorpay SDK not loaded. Check internet connection.");
+        toast.error("Razorpay SDK not loaded. Check internet connection.");
         return;
       }
 
@@ -301,8 +302,8 @@ const Checkout = () => {
       rzp1.open();
 
     } catch (err) {
-      console.error('Payment Init Error:', err);
-      setError('Payment initialization failed.');
+      console.error("Order processing error:", err);
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -343,9 +344,8 @@ const Checkout = () => {
       // Send Email (Fire and forget)
       sendConfirmationEmail(userData); // Helper function recommended
 
-      alert('Payment Successful! Order Placed.');
       clearCart();
-      navigate('/');
+      navigate('/order-success');
 
     } catch (err) {
       console.error("Save Order Error", err);

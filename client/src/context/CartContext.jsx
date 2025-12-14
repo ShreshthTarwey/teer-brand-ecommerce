@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
   // 1. INITIAL LOAD
   useEffect(() => {
     const loadCart = async () => {
-      if (user) {
+      if (user && user._id) {
         // LOGGED IN: Fetch from DB
         try {
           // CHECK FOR LOCAL CART TO MERGE

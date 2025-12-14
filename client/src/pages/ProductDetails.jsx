@@ -3,7 +3,9 @@ import { useParams, useLocation } from 'react-router-dom'; // useLocation for fu
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import { Star, ShoppingCart } from 'lucide-react';
+import toast from 'react-hot-toast';
 import './ProductDetails.css'; // We will create this CSS file
+import Loader from '../components/Loader';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -41,7 +43,7 @@ const ProductDetails = () => {
         try {
             const user = JSON.parse(localStorage.getItem('user'));
             if (!user) {
-                alert("Please login to verify your purchase and leave a review.");
+                toast.error("Please login to verify your purchase and leave a review.");
                 setSubmitting(false);
                 return;
             }
@@ -54,15 +56,15 @@ const ProductDetails = () => {
             // Add new review to list
             setReviews([res.data, ...reviews]);
             setComment("");
-            alert("Review submitted successfully!");
+            toast.success("Review submitted successfully!");
         } catch (err) {
             console.error(err);
-            alert(err.response?.data || "Failed to submit review. Have you purchased this item?");
+            toast.error(err.response?.data || "Failed to submit review. Have you purchased this item?");
         }
         setSubmitting(false);
     };
 
-    if (loading) return <div className="loading">Loading...</div>;
+    if (loading) return <Loader />;
     if (!product) return <div className="error">Product not found</div>;
 
     // Calculate Average Rating

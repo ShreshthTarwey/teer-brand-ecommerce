@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { User, MapPin, Save, Trash2, Plus } from 'lucide-react';
+import { User, Mail, MapPin, LogOut, Package, Trash2, Plus, Save } from 'lucide-react';
+import toast from 'react-hot-toast';
 import './UserProfile.css';
 
 const UserProfile = () => {
@@ -50,17 +52,18 @@ const UserProfile = () => {
         try {
             const currentUser = JSON.parse(localStorage.getItem("user"));
             const updateData = { ...formData };
-            if (!updateData.password) delete updateData.password; // Don't send empty password
+            if (updateData.password === "") delete updateData.password;
 
             const res = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/users/${currentUser._id}`, updateData, getAuthHeader());
-            alert("Profile Updated Successfully!");
 
-            // Update Local Storage (name might have changed)
-            const updatedLocal = { ...currentUser, ...res.data, accessToken: currentUser.accessToken };
-            localStorage.setItem("user", JSON.stringify(updatedLocal));
+            // Allow dynamic Update without LogOut
+            localStorage.setItem("user", JSON.stringify({ ...currentUser, ...res.data }));
+            setUser(res.data);
+
+            toast.success("Profile Updated Successfully");
         } catch (err) {
             console.error(err);
-            alert("Failed to update profile");
+            toast.error("Update Failed");
         }
     };
 
@@ -74,10 +77,10 @@ const UserProfile = () => {
             setUser(prev => ({ ...prev, addresses: res.data.addresses }));
             setShowAddressForm(false);
             setNewAddress({ street: '', city: '', state: '', pin: '', isDefault: false });
-            alert("Address Added!");
+            toast.success("Address Added");
         } catch (err) {
             console.error(err);
-            alert("Failed to add address");
+            toast.error("Failed to add address");
         }
     };
 
@@ -90,11 +93,12 @@ const UserProfile = () => {
 
             setUser(prev => ({
                 ...prev,
-                addresses: prev.addresses.filter(a => a._id !== addressId)
+                addresses: prev.addresses.filter(addr => addr._id !== addressId)
             }));
+            toast.success("Address Deleted");
         } catch (err) {
             console.error(err);
-            alert("Failed to delete address");
+            toast.error("Failed to delete address");
         }
     };
 
