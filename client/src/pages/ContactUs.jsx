@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './ContactUs.css';
 import { Phone, Globe, Mail, MapPin, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 const ContactUs = () => {
     useEffect(() => {
@@ -62,11 +63,127 @@ const ContactUs = () => {
 
     return (
         <div>
+
+
+
+
             {/* Hero Section */}
             <section className="contact-hero">
                 <div className="hero-overlay"></div>
-                <div className="hero-content">
-                    <h1>Contact Us</h1>
+
+                {/* Animated Particles */}
+                {/* Animated Particles - Brightness Increased */}
+                {/* 1. Gold - Top Left */}
+                <motion.div
+                    className="particle"
+                    style={{
+                        position: 'absolute',
+                        top: '15%',
+                        left: '10%',
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        background: 'rgba(255, 215, 0, 0.8)', // Alpha 0.8
+                        zIndex: 1,
+                        boxShadow: '0 0 25px rgba(255, 215, 0, 0.9)' // Stronger glow
+                    }}
+                    animate={{ y: [0, -30, 0], opacity: [0.6, 1, 0.6] }} // Ranges 0.6 - 1.0
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                />
+
+                {/* 2. Red - Bottom Right */}
+                <motion.div
+                    className="particle"
+                    style={{
+                        position: 'absolute',
+                        bottom: '25%',
+                        right: '10%',
+                        width: '70px',
+                        height: '70px',
+                        borderRadius: '50%',
+                        background: 'rgba(226, 31, 38, 0.7)', // Alpha 0.7
+                        zIndex: 1,
+                        boxShadow: '0 0 30px rgba(226, 31, 38, 0.8)' // Stronger glow
+                    }}
+                    animate={{ y: [0, 40, 0], opacity: [0.5, 0.9, 0.5] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                />
+
+                {/* 3. White/Gold Small - Top Right (New) */}
+                <motion.div
+                    className="particle"
+                    style={{
+                        position: 'absolute',
+                        top: '30%',
+                        right: '25%',
+                        width: '20px',
+                        height: '20px',
+                        borderRadius: '50%',
+                        background: 'rgba(255, 255, 255, 0.6)',
+                        zIndex: 1,
+                        boxShadow: '0 0 15px rgba(255, 255, 255, 0.8)'
+                    }}
+                    animate={{ y: [0, -15, 0], x: [0, 10, 0], opacity: [0.4, 0.9, 0.4] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                />
+
+                {/* 4. Red Small - Bottom Left (New) */}
+                <motion.div
+                    className="particle"
+                    style={{
+                        position: 'absolute',
+                        bottom: '40%',
+                        left: '20%',
+                        width: '30px',
+                        height: '30px',
+                        borderRadius: '50%',
+                        background: 'rgba(226, 31, 38, 0.6)',
+                        zIndex: 1,
+                        boxShadow: '0 0 15px rgba(226, 31, 38, 0.7)'
+                    }}
+                    animate={{ y: [0, 20, 0], x: [0, -10, 0], opacity: [0.5, 0.9, 0.5] }}
+                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                />
+
+                {/* 5. Center Gold (New) */}
+                <motion.div
+                    className="particle"
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        width: '10px',
+                        height: '10px',
+                        borderRadius: '50%',
+                        background: 'rgba(255, 215, 0, 0.8)',
+                        zIndex: 1,
+                        boxShadow: '0 0 12px rgba(255, 215, 0, 1)'
+                    }}
+                    animate={{ scale: [1, 2, 1], opacity: [0, 0.8, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                />
+
+                <div className="hero-content" style={{ position: 'relative', zIndex: 10 }}>
+                    <motion.h1
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.5, ease: "easeOut" }} // Adjusted to 1.5s
+                    >
+                        Contact Us
+                    </motion.h1>
+
+                    {/* Subtle Underline Animation */}
+                    <motion.div
+                        style={{
+                            height: '4px',
+                            background: '#e21f26',
+                            margin: '10px auto',
+                            borderRadius: '2px'
+                        }}
+                        initial={{ width: 0 }}
+                        animate={{ width: '100px' }}
+                        transition={{ delay: 0.8, duration: 1.5, ease: "easeOut" }} // Adjusted to 1.5s, delay 0.8s
+                    />
                 </div>
             </section>
 

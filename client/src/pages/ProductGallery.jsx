@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useCart } from '../context/CartContext'; // Import Cart Context
 import toast from 'react-hot-toast';
+import ProductsHero from '../components/ProductsHero';
 
 const ProductGallery = () => {
   const [category, setCategory] = useState('ALL');
@@ -64,10 +65,10 @@ const ProductGallery = () => {
   return (
     <div className="products-page">
 
-      {/* 1. TOP BANNER */}
-      <section className="products-banner" style={{ backgroundImage: "url('/images/Product_Page.png')" }}>
-        <h1>Our Collection</h1>
-      </section>
+
+
+      {/* 1. TOP BANNER - REPLACED */}
+      <ProductsHero />
 
       <div className="heading">Product <span style={{ fontSize: '60px', color: '#e21f26', fontFamily: 'sans-serif' }}>Showcase</span></div>
 
