@@ -2,7 +2,8 @@
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 20px; /* Space between Shop button and User */
+  gap: 20px;
+  /* Space between Shop button and User */
   margin-left: 20px;
 }
 
@@ -20,7 +21,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  white-space: nowrap; /* CRITICAL: Prevents "Hi" and Name from breaking lines */
+  white-space: nowrap;
+  /* CRITICAL: Prevents "Hi" and Name from breaking lines */
   padding: 5px 10px;
 }
 
@@ -32,7 +34,8 @@
 
 /* Fix for the Dropdown items to sit in one line */
 .user-dropdown-item {
-  display: flex; /* Aligns icon and text horizontally */
+  display: flex;
+  /* Aligns icon and text horizontally */
   align-items: center;
   gap: 10px;
   width: 100%;
@@ -43,7 +46,8 @@
   background: none;
   border: none;
   cursor: pointer;
-  white-space: nowrap; /* Prevents text inside dropdown from wrapping */
+  white-space: nowrap;
+  /* Prevents text inside dropdown from wrapping */
 }
 
 .user-dropdown-item:hover {
@@ -55,16 +59,18 @@
 .user-dropdown {
   display: none;
   position: absolute;
-  top: 100%; 
+  top: 100%;
   right: 0;
   /* margin-top: 5px;  <-- REMOVE THIS (or set to 0) */
-  margin-top: 10px; /* Keep the visual gap if you want */
+  margin-top: 10px;
+  /* Keep the visual gap if you want */
   background-color: white;
   min-width: 180px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   z-index: 1000;
-  overflow: visible; /* <--- CRITICAL: Change 'hidden' to 'visible' so the bridge works */
+  overflow: visible;
+  /* <--- CRITICAL: Change 'hidden' to 'visible' so the bridge works */
   border: 1px solid #eee;
 }
 
@@ -72,11 +78,14 @@
 .user-dropdown::before {
   content: "";
   position: absolute;
-  top: -20px; /* Extends 20px UPWARDS to cover the gap */
+  top: -20px;
+  /* Extends 20px UPWARDS to cover the gap */
   left: 0;
   width: 100%;
-  height: 20px; /* Height of the bridge */
-  background: transparent; /* It is invisible */
+  height: 20px;
+  /* Height of the bridge */
+  background: transparent;
+  /* It is invisible */
 }
 
 .user-menu-container:hover .user-dropdown {
@@ -86,8 +95,24 @@
 /* Update this existing rule */
 .nav-links li a {
   text-decoration: none;
-  color: #333; /* or your specific color */
+  color: #333;
+  /* or your specific color */
   font-weight: 600;
-  font-size: 14px; /* Slightly reduce if needed, e.g., 13px */
-  white-space: nowrap; /* <--- CRITICAL: PREVENTS LINE BREAKS */
+  font-size: 14px;
+  /* Slightly reduce if needed, e.g., 13px */
+  white-space: nowrap;
+  /* <--- CRITICAL: PREVENTS LINE BREAKS */
+}
+
+/* Fix for Login/Profile Link */
+.user-icon-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 700;
+  font-size: 15px;
+  transition: color 0.3s;
+}
+
+.user-icon-link:hover {
+  color: #e21f26;
 }

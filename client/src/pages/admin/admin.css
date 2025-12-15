@@ -58,6 +58,35 @@
     background-color: #b31217;
 }
 
+/* WIDER FORM CARD for Product/Order Entry */
+.admin-card {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    /* Wider container */
+    margin: 0 auto;
+    /* Center alignment */
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
 /* Sidebar */
 .admin-sidebar {
     background-color: #333;

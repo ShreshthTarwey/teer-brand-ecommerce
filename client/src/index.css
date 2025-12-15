@@ -773,7 +773,70 @@ header {
 .products-main-section {
     padding: 60px 0;
     text-align: center;
-    background-color: white;
+    background-color: #faf9f6;
+    /* Warm off-white */
+    background-image: linear-gradient(to bottom, #fff, #faf9f6);
+    /* Subtle gradient */
+}
+
+/* Benchmark Section */
+.benchmark-section {
+    padding: 60px 5%;
+    background-color: #fff;
+    text-align: center;
+    position: relative;
+    border-top: 1px solid #eee;
+}
+
+.benchmark-tagline {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 20px auto 40px;
+    max-width: 700px;
+}
+
+.quality-standards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.standard-item {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    /* Soft shadow */
+    transition: transform 0.3s;
+    border-top: 4px solid #e21f26;
+    /* Brand accent */
+}
+
+.standard-item:hover {
+    transform: translateY(-5px);
+}
+
+.standard-item i {
+    font-size: 40px;
+    color: #e21f26;
+    margin-bottom: 20px;
+}
+
+.standard-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.standard-item p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .products-main-section h2 {
@@ -788,7 +851,8 @@ header {
     width: 300px;
     background-color: #e21f26;
     margin: 0 auto 30px;
-    background-image: linear-gradient(to right, #e21f26, transparent);
+    background-image: linear-gradient(to right, transparent, #e21f26, transparent);
+    /* Faded edges */
 }
 
 .products-tagline {
