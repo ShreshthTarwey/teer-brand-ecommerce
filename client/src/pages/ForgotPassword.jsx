@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import emailjs from '@emailjs/browser';
 import toast from 'react-hot-toast';
+import { CheckCircle, AlertCircle } from 'lucide-react'; // Import missing icons
 import './AuthStyles.css'; // Re-use auth styles
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
-    const [isLoading, setIsLoading] = useState(false); // Use a dedicated loading state
+    // Combine loading/success/error into one status for cleaner UI logic as per JSX
+    const [status, setStatus] = useState("idle"); // idle, loading, success, error
+    const [message, setMessage] = useState("");
 
     const handleResetRequest = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
+        setStatus("loading");
+        setMessage("");
 
         try {
             // 1. Request Token from Backend
@@ -19,12 +23,13 @@ const ForgotPassword = () => {
             const { token, username } = res.data;
 
             // 2. Send Email via EmailJS
-            const resetLink = `http://localhost:5173/reset-password/${token}`;
+            // FIX: Use window.location.origin to get the current domain (e.g. teer-brand.com or localhost)
+            const resetLink = `${window.location.origin}/reset-password/${token}`;
 
             const templateParams = {
                 to_name: username,
                 reset_link: resetLink,
-                user_email: email // Match Checkout.jsx convention
+                user_email: email
             };
 
             await emailjs.send(
@@ -33,15 +38,16 @@ const ForgotPassword = () => {
                 templateParams,
                 import.meta.env.VITE_EMAILJS_PUBLIC_KEY
             );
-            console.log("EmailJS Success!", res);
 
-            toast.success("Password reset link sent to your email!");
+            setStatus("success");
+            setMessage("Password reset link sent to your email! Check your inbox.");
+            toast.success("Link sent!");
 
         } catch (err) {
             console.error(err);
-            toast.error("Failed to send reset link. Please try again.");
-        } finally {
-            setIsLoading(false);
+            setStatus("error");
+            setMessage(err.response?.data || "Failed to send reset link. Please check the email.");
+            toast.error("Failed to send link.");
         }
     };
 
