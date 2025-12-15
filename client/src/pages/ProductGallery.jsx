@@ -4,11 +4,13 @@ import axios from 'axios';
 import { useCart } from '../context/CartContext'; // Import Cart Context
 import toast from 'react-hot-toast';
 import ProductsHero from '../components/ProductsHero';
+import Loader from '../components/Loader';
 
 const ProductGallery = () => {
   const [category, setCategory] = useState('ALL');
   const [modalImage, setModalImage] = useState(null);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Get Add to Cart function
   const { addToCart } = useCart();
@@ -19,8 +21,10 @@ const ProductGallery = () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
         setProducts(res.data);
+        setLoading(false);
       } catch (err) {
         console.error("Error fetching products:", err);
+        setLoading(false);
       }
     };
     fetchProducts();
@@ -80,52 +84,56 @@ const ProductGallery = () => {
 
       {/* 2. INFINITE SCROLLER (3 ROWS RESTORED) */}
       <section className="scroller-section-container">
-        {products.length > 0 && (
-          <div className="wrapper">
+        {loading ? (
+          <div style={{ padding: '50px 0' }}><Loader /></div>
+        ) : (
+          products.length > 0 && (
+            <div className="wrapper">
 
-            {/* Row 1: Right to Left */}
-            <div className="container">
-              <div className="scroll">
-                {products.map((p) => (
-                  <img key={p._id} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
-                ))}
+              {/* Row 1: Right to Left */}
+              <div className="container">
+                <div className="scroll">
+                  {products.map((p) => (
+                    <img key={p._id} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
+                  ))}
+                </div>
+                <div className="scroll">
+                  {products.map((p) => (
+                    <img key={`dup-${p._id}`} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
+                  ))}
+                </div>
               </div>
-              <div className="scroll">
-                {products.map((p) => (
-                  <img key={`dup-${p._id}`} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
-                ))}
+
+              {/* Row 2: Left to Right (Reverse) */}
+              <div className="container">
+                <div className="scroll reverse">
+                  {products.map((p) => (
+                    <img key={p._id} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
+                  ))}
+                </div>
+                <div className="scroll reverse">
+                  {products.map((p) => (
+                    <img key={`dup-${p._id}`} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
+                  ))}
+                </div>
               </div>
+
+              {/* Row 3: Right to Left */}
+              <div className="container">
+                <div className="scroll">
+                  {products.map((p) => (
+                    <img key={p._id} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
+                  ))}
+                </div>
+                <div className="scroll">
+                  {products.map((p) => (
+                    <img key={`dup-${p._id}`} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
+                  ))}
+                </div>
+              </div>
+
             </div>
-
-            {/* Row 2: Left to Right (Reverse) */}
-            <div className="container">
-              <div className="scroll reverse">
-                {products.map((p) => (
-                  <img key={p._id} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
-                ))}
-              </div>
-              <div className="scroll reverse">
-                {products.map((p) => (
-                  <img key={`dup-${p._id}`} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
-                ))}
-              </div>
-            </div>
-
-            {/* Row 3: Right to Left */}
-            <div className="container">
-              <div className="scroll">
-                {products.map((p) => (
-                  <img key={p._id} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
-                ))}
-              </div>
-              <div className="scroll">
-                {products.map((p) => (
-                  <img key={`dup-${p._id}`} src={p.img} alt={p.name} loading="lazy" onClick={() => setModalImage(p.img)} style={{ cursor: 'pointer' }} />
-                ))}
-              </div>
-            </div>
-
-          </div>
+          )
         )}
       </section>
 
@@ -151,37 +159,41 @@ const ProductGallery = () => {
 
       {/* 4. PRODUCT GRID (With Add to Cart) */}
       <section className="products">
-        {filteredProducts.map((product) => (
-          <div key={product._id} className="product-card" style={{ backgroundColor: product.color }}>
-            <img src={product.img} alt={product.name} />
-            <div className="overlay">
-              <h3 className="animated-text">{product.name}</h3>
-              <div className="icons">
-                <button className="icon search" onClick={() => setModalImage(product.img)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>🔍</button>
+        {loading ? (
+          <Loader />
+        ) : (
+          filteredProducts.map((product) => (
+            <div key={product._id} className="product-card" style={{ backgroundColor: product.color }}>
+              <img src={product.img} alt={product.name} />
+              <div className="overlay">
+                <h3 className="animated-text">{product.name}</h3>
+                <div className="icons">
+                  <button className="icon search" onClick={() => setModalImage(product.img)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>🔍</button>
 
 
-                {/* ADD TO CART */}
-                <button
-                  className="icon link"
-                  title="Add to Cart"
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'white' }}
-                  onClick={() => {
-                    addToCart({
-                      id: product._id, // Map MongoDB _id
-                      name: product.name,
-                      price: product.price,
-                      img: product.img,
-                      category: product.category
-                    });
-                    toast.success("Added to Cart!");
-                  }}
-                >
-                  🛒
-                </button>
+                  {/* ADD TO CART */}
+                  <button
+                    className="icon link"
+                    title="Add to Cart"
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'white' }}
+                    onClick={() => {
+                      addToCart({
+                        id: product._id, // Map MongoDB _id
+                        name: product.name,
+                        price: product.price,
+                        img: product.img,
+                        category: product.category
+                      });
+                      toast.success("Added to Cart!");
+                    }}
+                  >
+                    🛒
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </section>
 
       {/* 5. ZOOM MODAL */}

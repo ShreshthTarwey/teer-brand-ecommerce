@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import HeroAnimation from '../components/HeroAnimation';
+import Loader from '../components/Loader';
 
 const Home = () => {
     // --- SLIDER LOGIC ---
@@ -30,6 +31,7 @@ const Home = () => {
     // --------------------
 
     const [featuredProducts, setFeaturedProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -37,8 +39,10 @@ const Home = () => {
                 const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
                 // ONLY TAKE THE FIRST 12 PRODUCTS
                 setFeaturedProducts(res.data.slice(0, 12));
+                setLoading(false);
             } catch (err) {
                 console.log(err);
+                setLoading(false);
             }
         };
         fetchProducts();
@@ -318,28 +322,32 @@ const Home = () => {
 
                 <div className="products-color-bar"></div>
 
-                {/* DYNAMIC GRID */}
-                <div className="products-grid-container">
-                    {featuredProducts.map((product) => (
-                        <div
-                            className="product-grid-item"
-                            key={product._id}
-                            // DYNAMIC COLOR from Database! No more IDs needed.
-                            style={{ backgroundColor: product.color }}
-                        >
-                            <div className="product-image">
-                                <Link to={`/product/${product._id}`}>
-                                    <img src={product.img} alt={product.name} />
-                                </Link>
+                {loading ? (
+                    <Loader />
+                ) : (
+                    /* DYNAMIC GRID */
+                    <div className="products-grid-container">
+                        {featuredProducts.map((product) => (
+                            <div
+                                className="product-grid-item"
+                                key={product._id}
+                                // DYNAMIC COLOR from Database! No more IDs needed.
+                                style={{ backgroundColor: product.color }}
+                            >
+                                <div className="product-image">
+                                    <Link to={`/product/${product._id}`}>
+                                        <img src={product.img} alt={product.name} />
+                                    </Link>
+                                </div>
+                                <div className="product-title">
+                                    <Link to={`/product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        {product.name}
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="product-title">
-                                <Link to={`/product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    {product.name}
-                                </Link>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
 
                 {/* VIEW ALL BUTTON */}
                 <div style={{ marginTop: '40px' }}>

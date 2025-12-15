@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, ShoppingCart, ArrowRight, Loader2 } from 'lucide-react'; // Added Loader2 icon
-import axios from 'axios'; // <--- IMPORT AXIOS
+import { Search, ShoppingCart, ArrowRight } from 'lucide-react';
+import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import toast from 'react-hot-toast';
+import Loader from '../components/Loader';
 import "./OnlineStore.css";
 
 const OnlineStore = () => {
@@ -26,11 +27,11 @@ const OnlineStore = () => {
         setProducts(res.data); // Save the food (data)
         setLoading(false); // Stop loading spinner
 
-        //SPINNER TESTING
+        // SPINNER TESTING
 
         // setTimeout(() => {
-        //   setProducts(res.data);
-        //   setLoading(false); 
+          // setProducts(res.data);
+          // setLoading(false); 
         // }, 15000);
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -100,9 +101,7 @@ const OnlineStore = () => {
         {/* 4. CONDITIONAL RENDERING */}
         {loading ? (
           // LOADING STATE
-          <div className="loading-container" style={{ display: 'flex', justifyContent: 'center', padding: '50px' }}>
-            <Loader2 className="animate-spin" size={48} color="#e21f26" />
-          </div>
+          <Loader />
         ) : filteredProducts.length > 0 ? (
           // DATA GRID
           <div className="product-grid">
