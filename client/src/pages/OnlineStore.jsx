@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import toast from 'react-hot-toast';
 import Loader from '../components/Loader';
+import AromaAnimation from '../components/AromaAnimation';
 import "./OnlineStore.css";
 
 const OnlineStore = () => {
@@ -30,8 +31,8 @@ const OnlineStore = () => {
         // SPINNER TESTING
 
         // setTimeout(() => {
-          // setProducts(res.data);
-          // setLoading(false); 
+        // setProducts(res.data);
+        // setLoading(false); 
         // }, 15000);
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -54,6 +55,7 @@ const OnlineStore = () => {
       {/* HERO BANNER */}
       <section className="store-hero">
         <div className="store-hero-overlay">
+          <AromaAnimation />
           <h1 className="store-hero-title">Online Store</h1>
           <p className="store-hero-subtitle">Premium Spices & Salts Delivered Home</p>
 

@@ -1,0 +1,30 @@
+.aroma-animation-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    /* Crucial: lets clicks pass through to search bar */
+    z-index: 1;
+    /* Behind text (which should be z-index 2 or higher) */
+}
+
+.spice-image {
+    position: absolute;
+    bottom: -15%;
+    /* Start below visibility */
+    width: 80px;
+    /* Base size, effectively w-20 to w-24 equivalent */
+    height: auto;
+    object-fit: contain;
+    opacity: 0;
+}
+
+@media (max-width: 768px) {
+    .spice-image {
+        width: 50px;
+        /* Smaller on mobile */
+    }
+}
