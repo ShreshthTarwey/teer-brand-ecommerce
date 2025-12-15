@@ -103,13 +103,16 @@ const ProductDetails = () => {
                     <button
                         className="add-cart-btn-large"
                         disabled={product.stock === 0}
-                        onClick={() => addToCart({
-                            id: product._id,
-                            name: product.name,
-                            price: product.price,
-                            img: product.img,
-                            category: product.category
-                        })}
+                        onClick={() => {
+                            addToCart({
+                                id: product._id,
+                                name: product.name,
+                                price: product.price,
+                                img: product.img,
+                                category: product.category
+                            });
+                            toast.success("Added to cart!");
+                        }}
                     >
                         <ShoppingCart style={{ marginRight: '10px' }} />
                         {product.stock === 0 ? "SOLD OUT" : "ADD TO CART"}

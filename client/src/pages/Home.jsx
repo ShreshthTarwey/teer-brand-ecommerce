@@ -328,11 +328,15 @@ const Home = () => {
                             style={{ backgroundColor: product.color }}
                         >
                             <div className="product-image">
-                                <Link to="/products">
+                                <Link to={`/product/${product._id}`}>
                                     <img src={product.img} alt={product.name} />
                                 </Link>
                             </div>
-                            <div className="product-title">{product.name}</div>
+                            <div className="product-title">
+                                <Link to={`/product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    {product.name}
+                                </Link>
+                            </div>
                         </div>
                     ))}
                 </div>
