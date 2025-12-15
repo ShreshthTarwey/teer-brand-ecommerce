@@ -10,10 +10,9 @@ const Cart = () => {
   // 2. GET REAL DATA INSTEAD OF FAKE STATE
   const { cartItems, removeFromCart, updateQuantity, getCartTotal } = useCart();
 
-  // Calculate Shipping & Total dynamically
+  // Calculate Total (Shipping calculated at checkout)
   const subtotal = getCartTotal();
-  const shipping = subtotal > 500 ? 0 : 50; // Free shipping over 500 (Optional logic)
-  const total = subtotal + shipping;
+  const total = subtotal;
 
   const handleCheckout = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -22,7 +21,6 @@ const Cart = () => {
       navigate("/login");
     } else {
       navigate("/checkout");
-      // Later we will redirect to /checkout here
     }
   };
 
@@ -91,9 +89,9 @@ const Cart = () => {
             <span>Subtotal</span>
             <span>₹{subtotal}</span>
           </div>
+          {/* Shipping row removed as per request */}
           <div className="summary-row">
-            <span>Shipping</span>
-            <span>{shipping === 0 ? <span style={{ color: 'green' }}>Free</span> : `₹${shipping}`}</span>
+            <span style={{ fontSize: '12px', color: '#666' }}>Shipping calculated at checkout</span>
           </div>
           <div className="divider"></div>
           <div className="summary-row total">

@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 6. POST REVIEW (Verified Purchase Only)
+// 6. POST REVIEW (Verified Purchase Only) Jin Customers nai order kia hai whi review dee sakte hai
 const Review = require('../models/Review');
 const Order = require('../models/Order');
 const User = require('../models/User'); // Import User model

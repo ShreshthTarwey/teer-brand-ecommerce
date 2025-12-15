@@ -15,6 +15,7 @@ const OrderSchema = new mongoose.Schema(
         },
       },
     ],
+    shippingFee: { type: Number, default: 0 },
     amount: { type: Number, required: true },
     address: { type: Object, required: true }, // Stores street, city, pin, etc.
     status: { type: String, default: "pending" }, // pending, approved, delivered

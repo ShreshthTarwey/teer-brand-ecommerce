@@ -1,5 +1,8 @@
 const jwt = require("jsonwebtoken");
 
+
+
+// (Level 1: The ID Check)  Authentication (Who are you?)
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.token;
   if (authHeader) {
@@ -14,10 +17,12 @@ const verifyToken = (req, res, next) => {
   }
 };
 
+// verifyTokenAndAuthorization (Level 2: The Ownership Check)
+
 const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
     // Allow if user is an Admin OR if the user ID matches the requested ID
-    // req.params.userId ----> order.js
+    // req.params.userId ----> order.js  different routes gives user id in different way iske lie aisa kia tha
     if (req.user.id === req.params.id || req.user.id === req.params.userId || req.user.isAdmin) {
       next();
     } else {
@@ -25,6 +30,9 @@ const verifyTokenAndAuthorization = (req, res, next) => {
     }
   });
 };
+
+
+// verifyTokenAndAdmin (Level 3: The VIP Check) Admin Authorization (Are you the Boss?)
 
 const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {

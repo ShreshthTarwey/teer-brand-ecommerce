@@ -21,7 +21,47 @@ const Checkout = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [savedAddresses, setSavedAddresses] = useState([]); // New State
+  const [savedAddresses, setSavedAddresses] = useState([]);
+
+  // --- NEW SHIPPING LOGIC ---
+  const [shippingCost, setShippingCost] = useState(0);
+  const subtotal = getCartTotal();
+  const total = subtotal + shippingCost; // VISUAL & PAYMENT TOTAL
+
+  // Calculate Shipping on Pincode Change
+  useEffect(() => {
+    const calculateShipping = () => {
+      // Rule 1: Free > 1000
+      if (subtotal > 1000) {
+        setShippingCost(0);
+        return;
+      }
+
+      const pin = formData.pincode;
+
+      // If pincode is not entered/too short, show 0 or default
+      if (!pin || pin.length < 3) {
+        setShippingCost(0); // Show 0 initially until we know
+        return;
+      }
+
+      // Rule 2: Local (825xxx)
+      if (pin.startsWith("825")) {
+        setShippingCost(20);
+      }
+      // Rule 3: Regional (8xxxxx)
+      else if (pin.startsWith("8")) {
+        setShippingCost(60);
+      }
+      // Rule 4: National
+      else {
+        setShippingCost(120);
+      }
+    };
+
+    calculateShipping();
+  }, [formData.pincode, subtotal]);
+
 
   // Fetch User Addresses
   useEffect(() => {
@@ -29,7 +69,6 @@ const Checkout = () => {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user) {
         try {
-          // We re-fetch user because localStorage might be stale regarding addresses
           const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/find/${user._id}`, {
             headers: { token: `Bearer ${user.accessToken}` }
           });
@@ -43,14 +82,9 @@ const Checkout = () => {
     fetchAddresses();
   }, []);
 
-  const SHIPPING_COST = 50;
-  const subtotal = getCartTotal();
-  const total = subtotal + SHIPPING_COST;
-
   // 2. Redirect if Cart is Empty
   useEffect(() => {
     if (cartItems.length === 0) {
-      // Optional: Redirect to store if empty
       // navigate('/store'); 
     }
   }, [cartItems, navigate]);
@@ -73,153 +107,6 @@ const Checkout = () => {
     return true;
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!validateForm()) return;
-
-  //   // 3. AUTH CHECK
-  //   const userDataString = localStorage.getItem('user');
-  //   if (!userDataString) {
-  //     alert('Please login to continue');
-  //     navigate('/login');
-  //     return;
-  //   }
-
-  //   const userData = JSON.parse(userDataString);
-  //   const token = userData.accessToken;
-  //   const userId = userData._id;
-
-  //   // 4. PREPARE ORDER PAYLOAD
-  //   const orderData = {
-  //     userId: userId,
-  //     products: cartItems.map(item => ({
-  //       productId: item.id, // Ensure this matches your Cart item structure (id vs _id)
-  //       quantity: item.quantity
-  //     })),
-  //     amount: total,
-  //     address: {
-  //       fullName: formData.fullName,
-  //       phone: formData.phone,
-  //       address: formData.address,
-  //       city: formData.city,
-  //       pincode: formData.pincode
-  //     }
-  //   };
-
-  //   setLoading(true);
-
-  //   try {
-  //     // 5. SEND TO BACKEND
-  //     const response = await fetch', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'token': `Bearer ${token}`
-  //       },
-  //       body: JSON.stringify(orderData)
-  //     });
-
-  //     if (!response.ok) throw new Error('Failed to place order');
-
-  //     // 6. SUCCESS
-  //     alert('Order Placed Successfully! 🎉');
-  //     clearCart(); // Wipe the cart
-  //     navigate('/'); // Go Home
-
-  //   } catch (err) {
-  //     setError('Failed to place order. Please try again.');
-  //     console.error('Order Error:', err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  //   const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!validateForm()) return;
-
-  //   const userDataString = localStorage.getItem('user');
-  //   if (!userDataString) {
-  //     alert('Please login to continue');
-  //     navigate('/login');
-  //     return;
-  //   }
-
-  //   const userData = JSON.parse(userDataString);
-  //   const token = userData.accessToken;
-  //   const userId = userData._id;
-
-  //   const orderData = {
-  //     userId: userId,
-  //     products: cartItems.map(item => ({
-  //       productId: item.id,
-  //       quantity: item.quantity
-  //     })),
-  //     amount: total,
-  //     address: {
-  //       fullName: formData.fullName,
-  //       phone: formData.phone,
-  //       address: formData.address,
-  //       city: formData.city,
-  //       pincode: formData.pincode
-  //     }
-  //   };
-
-  //   setLoading(true);
-
-  //   try {
-  //     // 1. SAVE TO MONGODB (Backend)
-  //     const response = await fetch(', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'token': `Bearer ${token}`
-  //       },
-  //       body: JSON.stringify(orderData)
-  //     });
-
-  //     if (!response.ok) throw new Error('Failed to place order');
-
-  //     // 2. SEND EMAIL (Frontend - Bypasses Render Block)
-  //     // Prepare the data to match your EmailJS Template variables
-  //     const emailParams = {
-  //       to_name: formData.fullName,
-  //       total_amount: `₹${total}`,
-  //       address: `${formData.address}, ${formData.city} - ${formData.pincode}`,
-  //       user_email: userData.email // Assuming user object has email
-  //     };
-
-  //     await emailjs.send(
-  //       "service_w11ztee",      // <--- PASTE YOUR SERVICE ID
-  //       "template_w54oyky",     // <--- PASTE YOUR TEMPLATE ID
-  //       emailParams,
-  //       "d7gZ3l4sWs6vNFFTB"       // <--- PASTE YOUR PUBLIC KEY
-  //     );
-
-  //     console.log("Email sent successfully!");
-
-  //     // 3. SUCCESS UI
-  //     alert('Order Placed! A confirmation email has been sent.');
-  //     clearCart();
-  //     navigate('/'); 
-
-  //   } catch (err) {
-  //     console.error('Order/Email Error:', err);
-  //     // We still alert success if the Order saved but Email failed, to avoid panic
-  //     if(err.text) { 
-  //         alert("Order placed, but email confirmation failed."); 
-  //         clearCart();
-  //         navigate('/');
-  //     } else {
-  //         setError('Failed to place order. Please try again.');
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // ... inside Checkout.jsx
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -240,6 +127,7 @@ const Checkout = () => {
 
     try {
       // 2. CREATE ORDER ON BACKEND (Get Razorpay Order ID)
+      // Send FINAL TOTAL to Razorpay (Amount to Charge)
       const orderResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/payment/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -251,7 +139,7 @@ const Checkout = () => {
 
       // 3. INITIALIZE RAZORPAY
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Ensure this exists in frontend .env
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: orderData.data.amount,
         currency: orderData.data.currency,
         name: "Teer Brand",
@@ -270,11 +158,10 @@ const Checkout = () => {
               })
             });
 
-            const verifyData = await verifyRes.json();
-
             if (verifyRes.ok) {
               // 5. IF VERIFIED, SAVE ORDER TO DATABASE
-              await saveOrderToDB(userId, token, response.razorpay_payment_id, userData);
+              // IMPORTANT: Send 'subtotal' as amount, because backend logic adds shippingFee again!
+              await saveOrderToDB(userId, token, response.razorpay_payment_id, userData, subtotal);
             } else {
               toast.error("Payment verification failed!");
             }
@@ -310,7 +197,7 @@ const Checkout = () => {
   };
 
   // Helper to Save Order after payment
-  const saveOrderToDB = async (userId, token, paymentId, userData) => {
+  const saveOrderToDB = async (userId, token, paymentId, userData, amountToSave) => {
     try {
       const orderPayload = {
         userId: userId,
@@ -318,7 +205,7 @@ const Checkout = () => {
           productId: item.id,
           quantity: item.quantity
         })),
-        amount: total,
+        amount: amountToSave, // Sending Subtotal (Backend calculates fee & final total)
         address: {
           fullName: formData.fullName,
           phone: formData.phone,
@@ -342,7 +229,7 @@ const Checkout = () => {
       if (!response.ok) throw new Error('Failed to save order');
 
       // Send Email (Fire and forget)
-      sendConfirmationEmail(userData); // Helper function recommended
+      sendConfirmationEmail(userData);
 
       clearCart();
       navigate('/order-success');
@@ -354,8 +241,6 @@ const Checkout = () => {
   };
 
   const sendConfirmationEmail = async (userData) => {
-    // Re-using existing email logic, simplified for brevity here
-    // const userData = JSON.parse(userString); // Removed parsing, passed object directly
     const productListHTML = cartItems.map(item =>
       `<div style="border-bottom: 1px solid #eee; padding: 5px 0;">
            <strong>${item.name}</strong> <br/>
@@ -366,7 +251,7 @@ const Checkout = () => {
     const emailParams = {
       to_name: formData.fullName,
       user_email: userData.email,
-      order_amount: `₹${total}`,
+      order_amount: `₹${total}`, // Email shows full total user paid
       shipping_address: `${formData.address}, ${formData.city} - ${formData.pincode}`,
       order_list: productListHTML
     };
@@ -430,7 +315,6 @@ const Checkout = () => {
                       address: addr.street,
                       city: addr.city,
                       pincode: addr.pin,
-                      // state: addr.state // If you had a state field
                     });
                   }}
                   defaultValue=""
@@ -467,7 +351,7 @@ const Checkout = () => {
                   </div>
                   <div className="form-group">
                     <label className="form-label">Pincode *</label>
-                    <input name="pincode" value={formData.pincode} onChange={handleInputChange} className="form-input" placeholder="Pincode" maxLength="6" />
+                    <input name="pincode" value={formData.pincode} onChange={handleInputChange} className="form-input" placeholder="Pincode (e.g., 825409)" maxLength="6" />
                   </div>
                 </div>
 
@@ -505,8 +389,14 @@ const Checkout = () => {
                   <span className="price-value">₹{subtotal}</span>
                 </div>
                 <div className="price-row">
-                  <span className="price-label">Shipping</span>
-                  <span className="price-value">₹{SHIPPING_COST}</span>
+                  <span className="price-label">Shipping {subtotal > 1000 ? <span style={{ fontSize: '0.8em', color: 'green' }}>(Free &gt; ₹1000)</span> : ''}</span>
+                  <span className="price-value">
+                    {shippingCost === 0 && subtotal <= 1000 ? (
+                      <span style={{ color: '#999', fontSize: '0.9rem' }}>Enter PIN</span>
+                    ) : (
+                      shippingCost === 0 ? <span style={{ color: 'green' }}>Free</span> : `₹${shippingCost}`
+                    )}
+                  </span>
                 </div>
                 <div className="price-divider"></div>
                 <div className="price-row total-row">

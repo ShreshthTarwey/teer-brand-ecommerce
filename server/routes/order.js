@@ -6,9 +6,37 @@ const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = requir
 
 
 // 1. CREATE ORDER (Any logged in user can create)
+// 1. CREATE ORDER (Any logged in user can create)
 router.post("/", verifyToken, async (req, res) => {
-  const newOrder = new Order(req.body);
   try {
+    // --- SHIPPING FEE CALCULATION ---
+    const address = req.body.address || {};
+    // Extract PIN, convert to string, handle missing pin
+    const pinCode = (address.postal_code || address.zip || address.pin || "000000").toString();
+    const currentAmount = req.body.amount;
+
+    let shippingFee = 120; // Default National
+
+    // Rule 1: Free Shipping > 1000
+    if (currentAmount > 1000) {
+      shippingFee = 0;
+    }
+    // Rule 2: Local (825xxx)
+    else if (pinCode.startsWith("825")) {
+      shippingFee = 20;
+    }
+    // Rule 3: Regional (8xxxxx)
+    else if (pinCode.startsWith("8")) {
+      shippingFee = 60;
+    }
+    // Rule 4: National (Default) -> already set to 120
+
+    // Update Amount & Add Fee to Body
+    req.body.shippingFee = shippingFee;
+    req.body.amount = currentAmount + shippingFee;
+
+    // --- CREATE ORDER ---
+    const newOrder = new Order(req.body);
     const savedOrder = await newOrder.save();
 
     // DECREMENT STOCK
@@ -22,6 +50,7 @@ router.post("/", verifyToken, async (req, res) => {
 
     res.status(200).json(savedOrder);
   } catch (err) {
+    console.error("ORDER CREATE ERROR:", err);
     res.status(500).json(err);
   }
 });

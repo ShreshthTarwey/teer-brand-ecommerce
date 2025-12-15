@@ -7,11 +7,11 @@ const crypto = require("crypto");
 // 1. REGISTER
 router.post('/register', async (req, res) => {
   try {
-    // Check if user already exists
+    // Check if user already exists database mai
     const userExists = await User.findOne({ email: req.body.email });
     if (userExists) return res.status(400).json({ message: "Email already registered" });
 
-    // Encrypt the password
+    // Encrypt the password, with salting also
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
-      // We don't let them set isAdmin manually for security
+      // don't let them set isAdmin manually for security
     });
 
     const savedUser = await newUser.save();
@@ -50,7 +50,7 @@ router.post('/login', async (req, res) => {
         username: user.username,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "3d" } // Token expires in 3 days
+      { expiresIn: "3d" } // Token expires in 3 days -------- hum isko company kai according change krr sakte hai
     );
 
     // Send everything EXCEPT the password
@@ -68,12 +68,12 @@ router.post("/forgot-password-init", async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(404).json("User not found");
 
-    // Generate specific token (using crypto or simple random string)
+    // Generate specific token (using crypto or simple random string) crypto sai random string generate krange mail mai send krne kai lie
     const token = crypto.randomBytes(20).toString('hex');
 
     // Save token to DB (valid for 1 hour)
     user.resetPasswordToken = token;
-    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour --- hum company kai according isko change krr sakte hai
     await user.save();
 
     // Return token to frontend so it can send the email via EmailJS
@@ -98,6 +98,8 @@ router.post("/reset-password-finish", async (req, res) => {
       resetPasswordExpires: { $gt: Date.now() } // Check if not expired
     });
 
+    // agar password expire hoga toh user return hii nhi hoga
+
     if (!user) return res.status(400).json("Token is invalid or has expired");
 
     // Hash new password
@@ -105,7 +107,7 @@ router.post("/reset-password-finish", async (req, res) => {
     user.password = await bcrypt.hash(newPassword, salt);
 
     // Clear token fields
-    user.resetPasswordToken = undefined;
+    user.resetPasswordToken = undefined;   //Akk token sai sirf akk baar hii reset hoga
     user.resetPasswordExpires = undefined;
     await user.save();
 

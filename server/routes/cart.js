@@ -7,7 +7,10 @@ router.post("/", async (req, res) => {
     const { userId, product, type } = req.body; // type: 'add', 'remove', 'update', 'merge'
 
     try {
+        // 1. CHECK: Does this user already have a cart?
         let cart = await Cart.findOne({ userId });
+
+        // SCENARIO A: New User (No Cart yet)
 
         if (!cart) {
             // Create new cart
@@ -80,7 +83,7 @@ router.get("/find/:userId", async (req, res) => {
     }
 });
 
-// DELETE ITEM FROM CART (Update quantity to 0 effectively or filter out)
+// DELETE ITEM FROM CART (Update quantity to 0 effectively or filter out) --- hum yaha filtering krr rhe hai
 router.post("/remove", async (req, res) => {
     const { userId, productId } = req.body;
     try {
