@@ -46,7 +46,8 @@ header {
     display: flex;
     /* justify-content: space-between; */
     justify-content: flex-start;
-    gap: 100px;
+    gap: 30px;
+    /* Reduced from 100px to fix overflow */
     align-items: center;
     padding: 10px 5%;
     background-color: white;
@@ -165,6 +166,7 @@ header {
 
 .nav-links li {
     margin: 0 15px;
+    /* Default desktop margin */
     position: relative;
 }
 
@@ -215,10 +217,43 @@ header {
     display: block;
 }
 
-/* Tablet Styles */
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+/* 1. Laptop / Small Desktop (New) */
+@media screen and (max-width: 1280px) {
+    header {
+        gap: 20px;
+        /* Further reduce gap */
+        padding: 10px 2%;
+        /* Reduce side padding */
+    }
+
+    .nav-links li {
+        margin: 0 8px;
+        /* Tighter spacing */
+    }
+
+    .nav-links li a {
+        font-size: 13px;
+        /* Slightly smaller text */
+    }
+
+    .logo img {
+        height: 70px !important;
+        /* Slightly smaller logo */
+        margin-right: 25px;
+    }
+
+    .since-text {
+        top: 28px;
+        right: -15px;
+    }
+}
+
+/* 2. Tablet / Intermediate */
 @media screen and (max-width: 1024px) {
     .logo img {
-        height: 70px;
+        height: 60px;
         margin-right: 40px;
     }
 
@@ -227,6 +262,8 @@ header {
         top: 22px;
         right: -15px;
     }
+
+    /* Optional: If it still breaks, switch to mobile menu here */
 }
 
 @media screen and (max-width: 768px) {
