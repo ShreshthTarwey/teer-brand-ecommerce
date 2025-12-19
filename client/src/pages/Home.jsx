@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import HeroAnimation from '../components/HeroAnimation';
 import Loader from '../components/Loader';
+import CountUp from '../components/CountUp';
 
 const Home = () => {
     // --- SLIDER LOGIC ---
@@ -241,7 +242,6 @@ const Home = () => {
 
                         <div className="stat-item">
                             <div className="stat-icon">
-                                {/* <img src="Screenshot 2025-03-22 000921.png" alt="Calendar Icon" /> */}
                                 <i
                                     aria-hidden="true"
                                     className="fas fa-calendar-alt"
@@ -249,14 +249,13 @@ const Home = () => {
                                 ></i>
                             </div>
                             <div className="stat-content">
-                                <h3>1992</h3>
+                                <h3><CountUp from={1900} to={1992} duration={6} /></h3>
                                 <p>Since</p>
                             </div>
                         </div>
 
                         <div className="stat-item">
                             <div className="stat-icon">
-                                {/* <img src="Screenshot 2025-03-22 000921.png" alt="Calendar Icon" /> */}
                                 <i
                                     className="premium-drawable-icon fa fa-industry premium-svg-nodraw"
                                     aria-hidden="true"
@@ -264,14 +263,13 @@ const Home = () => {
                                 ></i>
                             </div>
                             <div className="stat-content">
-                                <h3>0+</h3>
+                                <h3><CountUp from={0} to={4} duration={6} suffix="+" /></h3>
                                 <p>Different Industries</p>
                             </div>
                         </div>
 
                         <div className="stat-item">
                             <div className="stat-icon">
-                                {/* <img src="Screenshot 2025-03-22 000921.png" alt="Calendar Icon" /> */}
                                 <i
                                     className="premium-drawable-icon fa fa-cube premium-svg-nodraw"
                                     aria-hidden="true"
@@ -279,14 +277,13 @@ const Home = () => {
                                 ></i>
                             </div>
                             <div className="stat-content">
-                                <h3>0+</h3>
+                                <h3><CountUp from={0} to={12} duration={6} suffix="+" /></h3>
                                 <p>Products</p>
                             </div>
                         </div>
 
                         <div className="stat-item">
                             <div className="stat-icon">
-                                {/* <img src="Screenshot 2025-03-22 000921.png" alt="Calendar Icon" /> */}
                                 <i
                                     className="premium-drawable-icon fa fa-globe premium-svg-nodraw"
                                     aria-hidden="true"
@@ -294,7 +291,7 @@ const Home = () => {
                                 ></i>
                             </div>
                             <div className="stat-content">
-                                <h3>0+</h3>
+                                <h3><CountUp from={0} to={0} duration={6} suffix="+" /></h3>
                                 <p>Export Countries</p>
                             </div>
                         </div>

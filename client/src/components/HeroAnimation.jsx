@@ -6,29 +6,31 @@ const HeroAnimation = () => {
   const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentAnim, setCurrentAnim] = useState('fade');
-  const [showMascot, setShowMascot] = useState(false);
+  const [animationPhase, setAnimationPhase] = useState(0); // 0: Logo, 1: Mascot, 2: CTA
+  const [showMascot, setShowMascot] = useState(false); // Can remove this if unused, but keeping for compatibility if referenced elsewhere? No, logic replaced.
+  // Actually, let's remove showMascot entirely to avoid confusion.
+
   // State for periodic blasts
   const [blastParticles, setBlastParticles] = useState([]);
 
-  // Generate a random blast (20 particles)
+  // ... (blast triggers logic same) ...
+
   const triggerBlast = () => {
     const newBlast = Array.from({ length: 20 }).map((_, i) => ({
       id: Date.now() + i,
-      x: (Math.random() - 0.5) * 600, // Spread nicely
+      x: (Math.random() - 0.5) * 600,
       y: (Math.random() - 0.5) * 600,
       color: spiceColors[Math.floor(Math.random() * spiceColors.length)],
       size: 10 + Math.random() * 20,
     }));
     setBlastParticles(newBlast);
-    // Cleanup after animation
     setTimeout(() => setBlastParticles([]), 2000);
   };
 
-  // Periodic Blast Loop (8-10 seconds)
   useEffect(() => {
     const blastInterval = setInterval(() => {
       triggerBlast();
-    }, 9000); // 9 seconds
+    }, 9000);
     return () => clearInterval(blastInterval);
   }, []);
 
@@ -60,15 +62,49 @@ const HeroAnimation = () => {
     }
   };
 
-  // Toggle between Logo and Mascot every 7 seconds
+  // Text Options for Mascot Phase
+  const mascotTexts = [
+    "Original Taste of India",
+    "Purity in Every Pinch",
+    "Tradition You Can Taste",
+    "The Essence of Authentic Flavors",
+    "Spices That Tell a Story"
+  ];
+
+  // Text Options for CTA Phase
+  const ctaTexts = [
+    { title: "Explore Our", highlight: "Premium Range", sub: "Hand-picked spices, authentic blends, and the purest ingredients." },
+    { title: "Elevate Your", highlight: "Daily Cooking", sub: "Discover the secret ingredients that bring meals to life." },
+    { title: "Authentic", highlight: "Indian Flavors", sub: "Bring the true taste of tradition to your kitchen today." },
+    { title: "Taste The", highlight: "Difference", sub: "Experience the rich aroma and vibrant colors of Teer spices." }
+  ];
+
+  const [mascotTextIndex, setMascotTextIndex] = useState(0);
+  const [ctaTextIndex, setCtaTextIndex] = useState(0);
+
+  // Cycle Animation Phases (Logo -> Mascot -> CTA) every 6 seconds
   useEffect(() => {
     const keys = Object.keys(animations);
     const interval = setInterval(() => {
-      setShowMascot(prev => !prev);
+      setAnimationPhase(prev => {
+        const nextPhase = (prev + 1) % 3;
+
+        // If moving to Mascot phase (1), pick random mascot text
+        if (nextPhase === 1) {
+          setMascotTextIndex(Math.floor(Math.random() * mascotTexts.length));
+        }
+        // If moving to CTA phase (2), pick random CTA text
+        if (nextPhase === 2) {
+          setCtaTextIndex(Math.floor(Math.random() * ctaTexts.length));
+        }
+
+        return nextPhase;
+      });
+
       // Pick random animation
       const randomKey = keys[Math.floor(Math.random() * keys.length)];
       setCurrentAnim(randomKey);
-    }, 7000);
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
@@ -234,7 +270,7 @@ const HeroAnimation = () => {
 
       {/* --- MASCOT MAGIC PARTICLES (Only when Mascot is show) --- */}
       <AnimatePresence>
-        {showMascot && magicParticles.map((p, i) => (
+        {animationPhase === 1 && magicParticles.map((p, i) => (
           <motion.div
             key={p.id}
             initial={{ opacity: 0, scale: 0 }}
@@ -264,8 +300,8 @@ const HeroAnimation = () => {
       <div style={{ zIndex: 10, textAlign: 'center', position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
         <AnimatePresence mode="wait">
-          {!showMascot ? (
-            /* --- LOGO PHASE --- */
+          {animationPhase === 0 && (
+            /* --- PHASE 1: LOGO --- */
             <motion.div
               key="logo"
               {...animations[currentAnim]}
@@ -277,13 +313,14 @@ const HeroAnimation = () => {
                   height: '350px',
                   width: 'auto',
                   maxWidth: '90vw',
-                  // Combined White Outline + GOLD GLOW
                   filter: 'drop-shadow(2px 0 0 white) drop-shadow(-2px 0 0 white) drop-shadow(0 2px 0 white) drop-shadow(0 -2px 0 white) drop-shadow(0 0 25px rgba(255, 215, 0, 0.8))'
                 }}
               />
             </motion.div>
-          ) : (
-            /* --- MASCOT PHASE --- */
+          )}
+
+          {animationPhase === 1 && (
+            /* --- PHASE 2: MASCOT --- */
             <motion.div
               key="mascot"
               {...animations[currentAnim]}
@@ -295,7 +332,7 @@ const HeroAnimation = () => {
                 style={{
                   height: '350px',
                   width: 'auto',
-                  filter: 'drop-shadow(0 0 25px rgba(255, 215, 0, 0.6))' // Gold Glow
+                  filter: 'drop-shadow(0 0 25px rgba(255, 215, 0, 0.6))'
                 }}
               />
               <motion.h2
@@ -310,12 +347,83 @@ const HeroAnimation = () => {
                   textShadow: '0 2px 5px rgba(0,0,0,0.8)'
                 }}
               >
-                "Original Taste of India"
+                "{mascotTexts[mascotTextIndex]}"
               </motion.h2>
             </motion.div>
           )}
-        </AnimatePresence>
 
+          {animationPhase === 2 && (
+            /* --- PHASE 3: CTA (Explore & Buy) --- */
+            <motion.div
+              key="cta"
+              {...animations[currentAnim]}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '25px',
+                maxWidth: '800px',
+                padding: '20px'
+              }}
+            >
+              <h2 style={{
+                color: '#FFD700', // Gold
+                fontSize: '3.5rem',
+                fontWeight: '700',
+                marginBottom: '10px',
+                textShadow: '0 4px 10px rgba(0,0,0,0.8)',
+                fontFamily: "'Merriweather', serif",
+                lineHeight: '1.2'
+              }}>
+                {ctaTexts[ctaTextIndex].title}
+                <br />
+                <span style={{ color: '#fff' }}>{ctaTexts[ctaTextIndex].highlight}</span>
+              </h2>
+
+              <p style={{
+                color: '#e0e0e0',
+                fontSize: '1.2rem',
+                maxWidth: '600px',
+                lineHeight: '1.6',
+                textShadow: '0 2px 4px rgba(0,0,0,0.8)'
+              }}>
+                {ctaTexts[ctaTextIndex].sub}
+              </p>
+
+              <button
+                onClick={() => navigate('/store')}
+                style={{
+                  padding: '15px 45px',
+                  backgroundColor: '#E21F26',
+                  color: 'white',
+                  border: '2px solid #E21F26',
+                  borderRadius: '50px',
+                  fontSize: '1.2rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  boxShadow: '0 0 30px rgba(226, 31, 38, 0.6)',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'uppercase',
+                  letterSpacing: '2px',
+                  marginTop: '20px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.1)';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.boxShadow = '0 0 40px rgba(226, 31, 38, 0.9)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.backgroundColor = '#E21F26';
+                  e.currentTarget.style.boxShadow = '0 0 30px rgba(226, 31, 38, 0.6)';
+                }}
+              >
+                Visit Online Store
+              </button>
+            </motion.div>
+          )}
+
+        </AnimatePresence>
       </div>
 
       {/* Dark Overlay Vignette */}
