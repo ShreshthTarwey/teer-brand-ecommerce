@@ -78,7 +78,16 @@ const Home = () => {
                     <div className="hero-content">
                         <div className="hero-header">
                             <h2>Welcome To <img src="/images/Teer_Brand_Logo_Large.png" alt="Teer Logo" className="inline-logo" /></h2>
-                            <div className="red-line"></div>
+                            {/* Replaced CSS line with SVG as requested */}
+                            <svg
+                                width="200"
+                                height="6"
+                                viewBox="0 0 500 8"
+                                preserveAspectRatio="none"
+                                style={{ marginTop: '10px', marginBottom: '20px', display: 'block' }}
+                            >
+                                <polygon points="0,0 500,8 0,8" fill="#e21f26" />
+                            </svg>
                         </div>
                         <div className="hero-text">
                             <p>Established with a passion for authenticity, <b>Teer Brand</b> has become a trusted name in the world of spices. Over the years, we have grown into a leading producer of <b>premium-quality spices and food products</b> in India. Our commitment to <b>tradition, purity, and taste</b> sets us apart, ensuring that every blend we create enhances the flavors of your kitchen.</p>
