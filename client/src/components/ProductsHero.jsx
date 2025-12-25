@@ -101,7 +101,7 @@ const ProductsHero = () => {
                     style={{
                         position: 'absolute',
                         left: item.x,
-                        width: `${item.size}px`,
+                        '--hero-packet-size': `${item.size}px`, // Pass as variable
                         top: '-150px', // Start above container
                         opacity: 1,
                         mixBlendMode: 'multiply'
