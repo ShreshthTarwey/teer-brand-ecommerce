@@ -82,7 +82,8 @@ header {
     /* Keep aspect ratio */
     max-width: none;
     /* Stop it from shrinking */
-    margin-right: 45px;
+    margin-right: 0;
+    /* Let flex gap handle spacing */
     object-fit: contain;
 }
 
@@ -124,14 +125,20 @@ header {
 /* Main rule Desktop */
 
 /* Main rule Desktop */
+/* Main rule Desktop */
 @media screen and (min-width: 769px) {
     .since-text {
-        font-size: 12px;
+        font-size: 13px;
+        /* Slightly easier to read */
         color: #666;
-        position: absolute;
-        top: 25px;
-        right: -10px;
+        position: relative;
+        /* Sit naturally in flex flow */
+        top: auto;
+        right: auto;
         white-space: nowrap;
+        margin-left: 0;
+        align-self: center;
+        /* Center vertically with logo */
     }
 }
 
