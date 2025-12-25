@@ -1863,6 +1863,13 @@ header {
     transform: translateY(0);
 }
 
+/* On Mobile, show details always (No Hover) */
+@media (max-width: 768px) {
+    .overlay {
+        transform: translateY(0) !important;
+    }
+}
+
 .animated-text {
     font-size: 16px;
     font-weight: bold;
