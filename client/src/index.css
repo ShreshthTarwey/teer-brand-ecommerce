@@ -1594,6 +1594,12 @@ header {
 /* --- WHO WE ARE PAGE STYLES --- */
 /* --- PRODUCTS PAGE STYLES --- */
 
+/* Added Page Background for Contrast */
+.products-page {
+    min-height: 100vh;
+    /* Reverted to transparent/default as per user request */
+}
+
 /* 1. TOP BANNER */
 .products-banner {
     position: relative;
@@ -1821,10 +1827,48 @@ header {
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
-    padding: 40px;
-    max-width: 1200px;
+    padding: 60px 40px;
+    /* Increased padding */
+    max-width: 1400px;
+    /* Slightly wider */
     min-height: 60vh;
-    margin: 0 auto;
+    margin: 40px auto;
+    /* Added margin top */
+
+    position: relative;
+    /* Ensure z-index allows interaction */
+    z-index: 1;
+
+    /* GLASS SURFACE */
+    background: rgba(255, 255, 255, 0.4);
+    /* Very transparent to show blobs */
+    backdrop-filter: blur(30px);
+    /* Heavy Blur */
+    -webkit-backdrop-filter: blur(30px);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+
+    overflow: hidden;
+    /* Clip the blobs if they spill */
+}
+
+/* THE COLORFUL "BACKDROP" BEHIND THE GLASS */
+.products::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Rich & Intense Multi-Color Linear Gradient */
+    /* Deep Red -> Burnt Orange -> Rich Gold */
+    background: linear-gradient(135deg, #b01c22, #e65100, #f39c12, #f1c40f);
+    opacity: 0.4;
+    /* Increased intensity significantly */
+    z-index: -1;
+    pointer-events: none;
 }
 
 .product-card {

@@ -1,7 +1,6 @@
 /* --- UPDATED STORE LAYOUT --- */
 
 .online-store-page {
-  background-color: #fcfcfc;
   min-height: 100vh;
   /* Option A: "Spice Sunset" Horizontal Gradient */
   background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
