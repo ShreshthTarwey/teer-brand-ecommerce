@@ -317,7 +317,7 @@ const Home = () => {
                     height="8"
                     viewBox="0 0 500 8"
                     preserveAspectRatio="none"
-                    style={{ maxWidth: '600px', height: '8px', marginBottom: '20px', display: 'block', margin: '0 auto 20px auto' }}
+                    style={{ maxWidth: '600px', height: '8px', marginBottom: '40px', display: 'block', margin: '0 auto 40px auto' }}
                 >
                     <polygon points="0,0 500,8 0,8" fill="#e21f26" />
                 </svg>

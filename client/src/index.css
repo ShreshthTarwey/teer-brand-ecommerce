@@ -1161,6 +1161,21 @@ header {
 
 
 /* NEW CSS FOR CONTACT US SECTION */
+.products-main-section {
+    padding: 60px 5%;
+    background-color: #fdfdfd;
+    /* Premium User-Provided Background */
+    background-image: url('/images/BackgroundImages/the_kitchen_ghost.webp');
+    background-repeat: repeat;
+    background-size: 600px;
+    background-attachment: fixed;
+    /* Premium Parallax feel */
+    text-align: center;
+    position: relative;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.02);
+    /* Inner shadow for depth */
+}
+
 .contact-section {
     padding: 60px 0;
     background-color: #fff;
@@ -1890,8 +1905,8 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Darker overlay for readability */
+    background-color: rgba(255, 255, 255, 0.96);
+    /* Brightness Reduced: Stronger White Overlay to fade the pattern */
 }
 
 .auth-wrapper {
@@ -2249,4 +2264,20 @@ header {
     .order-summary {
         width: 100%;
     }
+}
+
+/* --- FIXED COLOR BAR (Full Width) --- */
+.products-color-bar {
+    height: 10px;
+    /* Brand Gradient: Yellow -> Orange -> Red */
+    background: linear-gradient(90deg, #FFD700 0%, #FF8C00 50%, #E21F26 100%);
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
