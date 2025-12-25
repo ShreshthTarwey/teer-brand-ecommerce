@@ -123,13 +123,16 @@ header {
 
 /* Main rule Desktop */
 
-.since-text {
-    font-size: 12px;
-    color: #666;
-    position: absolute;
-    top: 25px;
-    right: -20px;
-    white-space: nowrap;
+/* Main rule Desktop */
+@media screen and (min-width: 769px) {
+    .since-text {
+        font-size: 12px;
+        color: #666;
+        position: absolute;
+        top: 25px;
+        right: -10px;
+        white-space: nowrap;
+    }
 }
 
 /* Mobile Menu Button */
@@ -658,13 +661,46 @@ header {
     overflow: hidden;
     margin: 10px;
     margin-right: 100px;
+    /* Default desktop margin */
 }
 
 .spices-image img {
     width: 80%;
+    /* Default desktop width */
     height: 400px;
     display: block;
     border-radius: 10px;
+    object-fit: cover;
+    /* Prevent squishing */
+}
+
+/* RESPONSIVE FIX FOR SPICES SECTION */
+@media (max-width: 1024px) {
+    .spices-section {
+        flex-direction: column-reverse;
+        /* Image on top or bottom? User said image on right is not responsive. Stack it. */
+        padding: 20px 0;
+    }
+
+    .spices-image {
+        margin: 20px auto;
+        width: 90%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .spices-image img {
+        width: 100%;
+        height: auto;
+        /* Maintain aspect ratio */
+        max-height: 400px;
+    }
+
+    .spices-content {
+        padding: 30px;
+        text-align: center;
+        align-items: center;
+    }
 }
 
 /* Why Goldiee Section */
@@ -841,9 +877,10 @@ header {
 }
 
 .standard-item {
-    flex: 1;
+    flex: 0 1 300px;
+    /* Do not grow weirdly, just target 300px width */
     min-width: 250px;
-    max-width: 300px;
+    /* max-width: 300px;  <-- Removed to let flex-basis handle it cleanly */
     padding: 30px;
     background: white;
     border-radius: 12px;

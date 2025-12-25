@@ -113,10 +113,33 @@
   transition: color 0.3s;
 }
 
-/* --- DESKTOP ONLY UTILITY --- */
+/* --- DESKTOP ONLY UTILITY (Restored) --- */
 @media (max-width: 1024px) {
   .desktop-only {
     display: none !important;
+  }
+}
+
+/* --- MOBILE MENU BUTTON FIX --- */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  padding: 8px;
+  /* Absolute Positioning to lock it in corner */
+  position: absolute;
+  right: 20px;
+  top: 25px;
+  /* Aligned with Logo center typically */
+  z-index: 1100;
+}
+
+/* SHOW MOBILE BTN ON TABLET & MOBILE (Max-Width 1024px) */
+@media (max-width: 1024px) {
+  .mobile-menu-btn {
+    display: block;
   }
 }
 
