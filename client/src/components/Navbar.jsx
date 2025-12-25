@@ -37,10 +37,8 @@ const Navbar = () => {
         <Menu size={24} />
       </button>
 
-      <nav className={`main-nav ${isMobileMenuOpen ? 'active' : ''}`}>
-        <button className="close-menu-btn mobile-only-close" onClick={toggleMenu}>
-          <X size={24} />
-        </button>
+      {/* --- DESKTOP NAV --- */}
+      <nav className="main-nav desktop-only">
         <ul className="nav-links">
           <li><Link to="/">HOME</Link></li>
           <li><Link to="/who-we-are">WHO WE ARE</Link></li>
@@ -63,11 +61,10 @@ const Navbar = () => {
 
         {/* --- FIXED ACTIONS SECTION --- */}
         <div className="nav-actions">
-
           {/* 1. ONLINE SHOP BUTTON */}
           <Link to="/store" className="goldiee-queen" style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
             <Store size={16} />
-            <span>ONLINE SHOP</span> {/* Changed text to span */}
+            <span>ONLINE SHOP</span>
           </Link>
 
           {/* 2. USER SECTION (Dropdown) */}
@@ -101,10 +98,67 @@ const Navbar = () => {
             /* Login Link */
             <Link to="/login" className="user-icon-link" style={{ display: 'flex', alignItems: 'center', gap: '5px', whiteSpace: 'nowrap' }}>
               <User size={24} color="#e21f26" />
-              <span>Login/Profile</span> {/* Changed p to span */}
+              <span>Login/Profile</span>
             </Link>
           )}
+        </div>
+      </nav>
 
+      {/* --- MOBILE MENU (Slide-in Drawer) --- */}
+      <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMenu}></div>
+
+      <nav className={`mobile-menu-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
+        <div className="mobile-menu-header">
+          <img src="/images/Teer_Brand_Logo_Large.png" alt="Teer Logo" height="40" />
+          <button className="close-menu-btn" onClick={toggleMenu}>
+            <X size={28} />
+          </button>
+        </div>
+
+        <div className="mobile-menu-content">
+          <Link to="/" onClick={toggleMenu} className="mobile-link">HOME</Link>
+          <Link to="/who-we-are" onClick={toggleMenu} className="mobile-link">WHO WE ARE</Link>
+
+          {/* PRODUCTS SECTION (Expanded by default) */}
+          <div className="mobile-products-section">
+            <span className="mobile-section-title">PRODUCTS</span>
+            <div className="mobile-sublinks">
+              <Link to="/products?category=kitchen" onClick={toggleMenu}>Kitchen Essentials</Link>
+              <Link to="/products?category=spices" onClick={toggleMenu}>Spices</Link>
+              <Link to="/products?category=salts" onClick={toggleMenu}>Salts</Link>
+              <Link to="/products?category=blended" onClick={toggleMenu}>Blended Masalas</Link>
+            </div>
+          </div>
+
+          <Link to="/events" onClick={toggleMenu} className="mobile-link">EVENTS & AWARDS</Link>
+          <Link to="/media" onClick={toggleMenu} className="mobile-link">MEDIA</Link>
+          <Link to="/news" onClick={toggleMenu} className="mobile-link">NEWS</Link>
+          <Link to="/contact-us" onClick={toggleMenu} className="mobile-link">CONTACT US</Link>
+
+          <div className="mobile-divider"></div>
+
+          {/* ACTIONS FOR MOBILE */}
+          <Link to="/store" onClick={toggleMenu} className="mobile-action-btn">
+            <Store size={18} /> ONLINE SHOP
+          </Link>
+
+          {user ? (
+            <div className="mobile-user-section">
+              <div className="mobile-user-info">
+                <User size={18} /> Hi, {user.username}
+              </div>
+              <div className="mobile-sublinks">
+                <Link to="/profile" onClick={toggleMenu}>My Profile</Link>
+                <Link to="/orders" onClick={toggleMenu}>My Orders</Link>
+                <Link to="/cart" onClick={toggleMenu}>My Cart</Link>
+                <button onClick={handleLogout} className="mobile-logout">Logout</button>
+              </div>
+            </div>
+          ) : (
+            <Link to="/login" onClick={toggleMenu} className="mobile-action-btn secondary">
+              <User size={18} /> LOGIN / REGISTER
+            </Link>
+          )}
         </div>
       </nav>
     </header>
