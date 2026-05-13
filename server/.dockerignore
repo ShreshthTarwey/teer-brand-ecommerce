@@ -1,0 +1,23 @@
+# Dependency directories
+node_modules/
+npm-debug.log
+
+# Environment variables (never copy .env into images)
+.env
+.env.example
+
+# Git directories
+.git/
+.gitignore
+
+# Docker configurations
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Project documentation
+README.md
+
+# Operating System Files
+.DS_Store
+Thumbs.db

@@ -54,6 +54,45 @@ This project uses the following technologies:
 
 ---
 
+## 📂 Folder Structure
+
+The project follows a modular MERN stack architecture, upgraded for DevOps readiness with Docker and CI/CD pipelines.
+
+```text
+Teer_Brand_MERN/
+├── .github/                  # GitHub Actions CI/CD workflows
+│   └── workflows/            # Pipeline definitions (build, test, deploy)
+├── client/                   # Frontend React Application (Vite)
+│   ├── public/               # Static assets directly served to the browser
+│   ├── src/                  # Main frontend source code
+│   │   ├── assets/           # Images, fonts, and local media
+│   │   ├── components/       # Reusable React components (UI elements)
+│   │   ├── context/          # React Context API for global state (Auth, Cart)
+│   │   ├── hooks/            # Custom React hooks for shared logic
+│   │   ├── pages/            # Top-level page components (Home, Shop, Admin)
+│   │   └── services/         # API call modules to communicate with backend
+│   ├── .env.example          # Example environment variables for frontend
+│   └── package.json          # Frontend dependencies and scripts
+├── server/                   # Backend Node.js & Express Application
+│   ├── config/               # Database and third-party API configurations
+│   ├── controllers/          # Core business logic for API endpoints
+│   ├── middleware/           # Custom middleware (JWT Auth, Error handling)
+│   ├── models/               # Mongoose database schemas (MongoDB Atlas)
+│   ├── routes/               # Express API route definitions
+│   ├── utils/                # Helper functions (Hash passwords, generate tokens)
+│   ├── server.js             # Backend application entry point
+│   ├── Dockerfile            # Optimized Docker configuration for the backend
+│   ├── .dockerignore         # Specifies files to exclude from Docker build
+│   ├── .env.example          # Example environment variables for backend
+│   └── package.json          # Backend dependencies and scripts
+├── Jenkinsfile               # Jenkins deployment pipeline configuration
+├── nginx/                    # Nginx configurations for reverse proxy (Production)
+├── docker-compose.yml        # Orchestration for multi-container execution
+└── README.md                 # Project documentation (this file)
+```
+
+---
+
 ## 🚀 Getting Started
 
 Follow these instructions to set up the project locally.
