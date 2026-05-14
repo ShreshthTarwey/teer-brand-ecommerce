@@ -38,4 +38,5 @@ jobs:
       # Step 5 - Trigger Jenkins Deployment
       - name: Trigger Jenkins Pipeline
         run: |
-          curl -X POST "http://${{ secrets.JENKINS_IP }}:8080/job/${{ secrets.JENKINS_JOB }}/build?token=${{ secrets.JENKINS_TOKEN }}"
+          curl -X POST -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_USER_TOKEN }}" \
+          "http://${{ secrets.JENKINS_IP }}:8080/job/${{ secrets.JENKINS_JOB }}/build?token=${{ secrets.JENKINS_TOKEN }}"
