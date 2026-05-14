@@ -6,6 +6,7 @@ const crypto = require("crypto");
 
 // 1. REGISTER
 router.post('/register', async (req, res) => {
+  
   try {
     // Check if user already exists database mai
     const userExists = await User.findOne({ email: req.body.email });
