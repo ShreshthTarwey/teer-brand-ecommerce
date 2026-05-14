@@ -8,8 +8,8 @@ pipeline {
         HOST_PORT = "5000"
         CONTAINER_PORT = "5000"
 
-        MONGO_URI = "mongodb+srv://shreshthtarwey23_db_user:rX6lQVtqcHs9Rlqd@teer-brand-cluster.oe4khwb.mongodb.net/?appName=teer-brand-cluster"
-        JWT_SECRET = "mySuperSecretKey123!"
+        MONGO_URI = credentials('mongo-uri')
+        JWT_SECRET = credentials('jwt-secret')
     }
 
     stages {
