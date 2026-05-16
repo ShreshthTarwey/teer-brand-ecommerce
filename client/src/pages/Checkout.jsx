@@ -226,6 +226,13 @@ const Checkout = () => {
         body: JSON.stringify(orderPayload)
       });
 
+      if (response.status === 403) {
+        alert("Your login session has expired. Please log in again to complete your order.");
+        localStorage.removeItem('user');
+        navigate('/login');
+        return;
+      }
+
       if (!response.ok) throw new Error('Failed to save order');
 
       // Send Email (Fire and forget)
