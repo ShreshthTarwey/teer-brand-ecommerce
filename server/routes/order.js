@@ -13,7 +13,7 @@ router.post("/", verifyToken, async (req, res) => {
     // --- SHIPPING FEE CALCULATION ---
     const address = req.body.address || {};
     // Extract PIN, convert to string, handle missing pin
-    const pinCode = (address.postal_code || address.zip || address.pin || "000000").toString();
+    const pinCode = (address.postal_code || address.zip || address.pin || address.pincode || "000000").toString();
     const currentAmount = req.body.amount;
 
     let shippingFee = 120; // Default National
