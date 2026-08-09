@@ -789,8 +789,8 @@ erDiagram
         number shippingFee "default: 0"
         number amount "required"
         Object address "required embedded snapshot"
-        string status "pending | delivered | cancelled"
-        string paymentStatus "Pending | Completed"
+        string status "pending or delivered or cancelled"
+        string paymentStatus "Pending or Completed"
         string paymentId "Razorpay payment ID"
         date createdAt
         date updatedAt
@@ -884,32 +884,32 @@ The payment integration uses a secure 2-step verification protocol combining the
 sequenceDiagram
     autonumber
     actor User as Customer
-    participant React as Frontend (Checkout.jsx)
-    participant Node as Backend (payment.js)
-    participant Razorpay as Razorpay API
-    participant OrderRoute as Backend (order.js)
-    participant DB as MongoDB Atlas
+    participant React as Frontend Checkout Page
+    participant Node as Backend Payment Route
+    participant Razorpay as Razorpay API Server
+    participant OrderRoute as Backend Order Route
+    participant DB as MongoDB Atlas Database
 
-    User->>React: Clicks "PLACE ORDER"
-    React->>Node: POST /api/payment/orders { amount: total }
-    Note over Node: Instantiates Razorpay SDK<br/>Converts amount to paise (* 100)
-    Node->>Razorpay: instance.orders.create({ amount, currency: "INR", receipt })
-    Razorpay-->>Node: Returns Razorpay Order Object (id: 'order_xyz')
-    Node-->>React: 200 OK { data: order }
+    User->>React: Clicks PLACE ORDER
+    React->>Node: POST /api/payment/orders with amount in INR
+    Note over Node: Instantiates Razorpay SDK and converts amount to paise
+    Node->>Razorpay: instance.orders.create with amount and currency
+    Razorpay-->>Node: Returns Razorpay Order Object with order_id
+    Node-->>React: 200 OK with order data
     
-    React->>User: Opens Razorpay Checkout Modal (rzp1.open())
-    User->>Razorpay: Completes Payment (UPI / Card / NetBanking)
-    Razorpay-->>React: Invokes callback with { order_id, payment_id, signature }
+    React->>User: Opens Razorpay Checkout Modal
+    User->>Razorpay: Completes Payment via UPI, Card, or NetBanking
+    Razorpay-->>React: Invokes callback with order_id, payment_id, signature
 
-    React->>Node: POST /api/payment/verify { order_id, payment_id, signature }
-    Note over Node: Computes HMAC-SHA256 digest of<br/>(order_id + "|" + payment_id)<br/>using RAZORPAY_KEY_SECRET
+    React->>Node: POST /api/payment/verify with signature payload
+    Note over Node: Computes HMAC-SHA256 digest using RAZORPAY_KEY_SECRET
     alt Signature Valid
         Node-->>React: 200 OK "Payment Verified Successfully"
-        React->>OrderRoute: POST /api/orders (with Bearer Token & Order Payload)
-        OrderRoute->>DB: Saves Order Document (paymentStatus: 'Completed')
-        OrderRoute->>DB: Decrements SKU stock ($inc: -qty)
-        OrderRoute-->>React: 200 OK (savedOrder)
-        React->>User: Renders OrderSuccess.jsx + Confetti
+        React->>OrderRoute: POST /api/orders with Bearer Token and Order Payload
+        OrderRoute->>DB: Saves Order Document with paymentStatus Completed
+        OrderRoute->>DB: Decrements SKU stock via atomic increment
+        OrderRoute-->>React: 200 OK with savedOrder
+        React->>User: Renders OrderSuccess.jsx with Confetti
     else Signature Invalid
         Node-->>React: 400 Bad Request "Invalid Signature Sent!"
         React->>User: Displays Payment Error Toast
@@ -994,9 +994,9 @@ HTTP Request
 
 ```mermaid
 flowchart TB
-    subgraph ClientTier ["Frontend Tier (Vercel Edge CDN)"]
-        ReactApp["React 19 + Vite SPA"]
-        Context["CartContext (State Engine)"]
+    subgraph ClientTier ["Frontend Tier: Vercel Edge CDN"]
+        ReactApp["React 19 and Vite SPA"]
+        Context["CartContext State Engine"]
         Router["React Router v7"]
         ReactApp --> Context
         ReactApp --> Router
@@ -1004,37 +1004,37 @@ flowchart TB
 
     subgraph ExternalServices ["External Cloud Services"]
         RazorpayGateway["Razorpay Payment Gateway"]
-        EmailJSService["EmailJS API (OTP & Invoices)"]
+        EmailJSService["EmailJS API Service"]
     end
 
-    subgraph BackendTier ["Backend Tier (AWS EC2 / Docker Container)"]
-        ExpressServer["Express 5.2 Server (Port 5000)"]
+    subgraph BackendTier ["Backend Tier: AWS EC2 Docker Container"]
+        ExpressServer["Express 5.2 Server on Port 5000"]
         AuthMiddleware["verifyToken RBAC Middleware"]
-        AuthRoute["/api/auth"]
-        ProductRoute["/api/products"]
-        CartRoute["/api/cart"]
-        OrderRoute["/api/orders"]
-        PaymentRoute["/api/payment"]
-        StatsRoute["/api/stats"]
-        UserRoute["/api/users"]
+        AuthRoute["auth.js Route Handler"]
+        ProductRoute["products.js Route Handler"]
+        CartRoute["cart.js Route Handler"]
+        OrderRoute["order.js Route Handler"]
+        PaymentRoute["payment.js Route Handler"]
+        StatsRoute["stats.js Route Handler"]
+        UserRoute["user.js Route Handler"]
 
         ExpressServer --> AuthMiddleware
-        ExpressServer --> AuthRoute
-        ExpressServer --> ProductRoute
-        ExpressServer --> CartRoute
-        ExpressServer --> OrderRoute
-        ExpressServer --> PaymentRoute
-        ExpressServer --> StatsRoute
-        ExpressServer --> UserRoute
+        AuthMiddleware --> AuthRoute
+        AuthMiddleware --> ProductRoute
+        AuthMiddleware --> CartRoute
+        AuthMiddleware --> OrderRoute
+        AuthMiddleware --> PaymentRoute
+        AuthMiddleware --> StatsRoute
+        AuthMiddleware --> UserRoute
     end
 
-    subgraph DataTier ["Data Tier (MongoDB Atlas Cloud Cluster)"]
-        MongoDB[("MongoDB Atlas")]
-        UsersColl[("users")]
-        ProductsColl[("products")]
-        CartsColl[("carts")]
-        OrdersColl[("orders")]
-        ReviewsColl[("reviews")]
+    subgraph DataTier ["Data Tier: MongoDB Atlas Cloud Cluster"]
+        MongoDB[("MongoDB Atlas Database")]
+        UsersColl[("users collection")]
+        ProductsColl[("products collection")]
+        CartsColl[("carts collection")]
+        OrdersColl[("orders collection")]
+        ReviewsColl[("reviews collection")]
 
         MongoDB --- UsersColl
         MongoDB --- ProductsColl
@@ -1043,23 +1043,23 @@ flowchart TB
         MongoDB --- ReviewsColl
     end
 
-    subgraph DevOpsPipeline ["DevOps CI/CD Pipeline"]
-        GitHub["GitHub Repository (main branch)"]
+    subgraph DevOpsPipeline ["DevOps CI CD Pipeline"]
+        GitHub["GitHub Repository main branch"]
         GHActions["GitHub Actions CI Runner"]
-        DockerHub["Docker Hub (theshreshth/teer-brand-backend)"]
-        Jenkins["Jenkins CD Server (AWS EC2 :8080)"]
+        DockerHub["Docker Hub Image Registry"]
+        Jenkins["Jenkins CD Server on AWS EC2"]
 
         GitHub -->|git push| GHActions
-        GHActions -->|Build & Push Image| DockerHub
+        GHActions -->|Build and Push Image| DockerHub
         GHActions -->|Trigger Webhook| Jenkins
-        Jenkins -->|Pull & Deploy Container| BackendTier
+        Jenkins -->|Pull and Deploy Container| ExpressServer
     end
 
-    ReactApp -->|REST API Calls (Axios)| ExpressServer
-    ReactApp -->|Direct OTP & Emails| EmailJSService
+    ReactApp -->|REST API Calls via Axios| ExpressServer
+    ReactApp -->|Direct OTP and Email Requests| EmailJSService
     ReactApp -->|Client Checkout Modal| RazorpayGateway
-    PaymentRoute -->|Create Orders & HMAC Verification| RazorpayGateway
-    BackendTier -->|Mongoose 9.0 ODM Queries & Aggregations| MongoDB
+    PaymentRoute -->|Create Orders and Verify HMAC| RazorpayGateway
+    ExpressServer -->|Mongoose 9.0 ODM Queries| MongoDB
 ```
 
 ---
@@ -1071,23 +1071,23 @@ flowchart TB
 sequenceDiagram
     autonumber
     actor Client as React Client
-    participant AuthRoute as server/routes/auth.js
-    participant DB as MongoDB (users)
+    participant AuthRoute as Auth Route auth.js
+    participant DB as MongoDB users collection
 
-    Client->>AuthRoute: POST /api/auth/login { email, password }
-    AuthRoute->>DB: User.findOne({ email })
+    Client->>AuthRoute: POST /api/auth/login with email and password
+    AuthRoute->>DB: User.findOne with email
     alt User Not Found
         DB-->>AuthRoute: null
         AuthRoute-->>Client: 401 Unauthorized "Wrong credentials!"
     else User Found
-        DB-->>AuthRoute: user document (with hashed password)
-        Note over AuthRoute: bcrypt.compare(password, user.password)
+        DB-->>AuthRoute: user document with hashed password
+        Note over AuthRoute: bcrypt.compare password with user.password
         alt Password Mismatch
             AuthRoute-->>Client: 401 Unauthorized "Wrong credentials!"
         else Password Valid
-            Note over AuthRoute: jwt.sign({ id, isAdmin, username }, JWT_SECRET, { expiresIn: '3d' })
-            AuthRoute-->>Client: 200 OK { ...userProfile, accessToken }
-            Note over Client: Saves to localStorage<br/>Forces reload to refresh Navbar state
+            Note over AuthRoute: jwt.sign with id, isAdmin, username and 3d expiry
+            AuthRoute-->>Client: 200 OK with user profile and accessToken
+            Note over Client: Saves user to localStorage and reloads Navbar state
         end
     end
 ```
@@ -1100,14 +1100,14 @@ sequenceDiagram
 flowchart LR
     subgraph Browser ["User Browser"]
         U["User Action"] --> C["React Component"]
-        C --> S["Cart / Auth State"]
-        S --> H["HTTP Request (Axios / Fetch)"]
+        C --> S["Cart and Auth State"]
+        S --> H["HTTP Request via Axios or Fetch"]
     end
 
     subgraph Server ["Node.js Express Server"]
         H --> R["Express Route"]
         R --> M["verifyToken Security"]
-        M --> L["Business Logic / Controller"]
+        M --> L["Business Logic Controller"]
         L --> Q["Mongoose ODM Query"]
     end
 
@@ -1120,7 +1120,7 @@ flowchart LR
     L --> RES["JSON HTTP Response"]
     RES --> H
     H --> C
-    C --> V["DOM Re-render / UI Update"]
+    C --> V["DOM Re-render and UI Update"]
 ```
 
 ---
@@ -1170,31 +1170,31 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    Users["Global Users"] --> Cloudflare["Cloudflare CDN & DDoS Protection"]
-    Cloudflare --> ALB["AWS Application Load Balancer (HTTPS)"]
+    Users["Global Users"] --> Cloudflare["Cloudflare CDN and DDoS Protection"]
+    Cloudflare --> ALB["AWS Application Load Balancer HTTPS"]
     
-    subgraph ComputeCluster ["Auto-Scaling Backend Cluster (AWS ECS / EKS)"]
-        Node1["Node.js Container 1"]
-        Node2["Node.js Container 2"]
-        Node3["Node.js Container N"]
+    subgraph ComputeCluster ["Auto-Scaling Backend Cluster on AWS ECS"]
+        Node1["Node.js Container Instance 1"]
+        Node2["Node.js Container Instance 2"]
+        Node3["Node.js Container Instance N"]
     end
     
     ALB --> Node1
     ALB --> Node2
     ALB --> Node3
 
-    subgraph CachingLayer ["Distributed Caching & Session Store"]
-        RedisCluster[("Redis Cluster (Catalog Cache & Rate Limiter)")]
+    subgraph CachingLayer ["Distributed Caching and Session Store"]
+        RedisCluster[("Redis Cluster: Catalog Cache and Rate Limiter")]
     end
 
-    Node1 <--> RedisCluster
-    Node2 <--> RedisCluster
-    Node3 <--> RedisCluster
+    Node1 --- RedisCluster
+    Node2 --- RedisCluster
+    Node3 --- RedisCluster
 
     subgraph AsyncQueue ["Asynchronous Worker Queue"]
-        BullMQ["BullMQ / Redis Message Queue"]
+        BullMQ["BullMQ Redis Message Queue"]
         Worker1["Worker: Razorpay Webhook Handler"]
-        Worker2["Worker: Email & Invoice Dispatcher"]
+        Worker2["Worker: Email and Invoice Dispatcher"]
         BullMQ --> Worker1
         BullMQ --> Worker2
     end
@@ -1203,9 +1203,9 @@ flowchart TB
     Node2 --> BullMQ
 
     subgraph DatabaseCluster ["High-Availability Data Layer"]
-        MongoPrimary[("MongoDB Primary (Writes)")]
-        MongoSec1[("MongoDB Secondary 1 (Reads)")]
-        MongoSec2[("MongoDB Secondary 2 (Reads)")]
+        MongoPrimary[("MongoDB Primary Replica for Writes")]
+        MongoSec1[("MongoDB Secondary Replica 1 for Reads")]
+        MongoSec2[("MongoDB Secondary Replica 2 for Reads")]
         MongoPrimary -->|Replica Sync| MongoSec1
         MongoPrimary -->|Replica Sync| MongoSec2
     end
