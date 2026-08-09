@@ -20,7 +20,12 @@ const ProductGallery = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
-        setProducts(res.data);
+        if (res.data && Array.isArray(res.data)) {
+          setProducts(res.data);
+        } else {
+          console.error("API response is not an array:", res.data);
+          setProducts([]);
+        }
         setLoading(false);
       } catch (err) {
         console.error("Error fetching products:", err);

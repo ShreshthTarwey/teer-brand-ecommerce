@@ -46,8 +46,13 @@ const MyOrders = () => {
         });
 
         // 3. Sort by Newest First
-        const sortedOrders = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setOrders(sortedOrders);
+        if (res.data && Array.isArray(res.data)) {
+          const sortedOrders = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setOrders(sortedOrders);
+        } else {
+          console.error("API response is not an array:", res.data);
+          setOrders([]);
+        }
         setLoading(false);
       } catch (err) {
         console.error("Error fetching orders:", err);

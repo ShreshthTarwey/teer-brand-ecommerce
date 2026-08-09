@@ -25,7 +25,12 @@ const OnlineStore = () => {
       try {
         // Calling your "Chef" (Node.js)
         const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
-        setProducts(res.data); // Save the food (data)
+        if (res.data && Array.isArray(res.data)) {
+          setProducts(res.data); // Save the food (data)
+        } else {
+          console.error("API response is not an array:", res.data);
+          setProducts([]);
+        }
         setLoading(false); // Stop loading spinner
 
         // SPINNER TESTING
